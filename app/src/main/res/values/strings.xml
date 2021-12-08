@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">Courier delivery</string>
+    <string name="routes">Маршруты</string>
+    <string name="map">Карта</string>
+</resources>
