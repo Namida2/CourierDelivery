@@ -10,9 +10,12 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/Theme.CourierDelivery">
+        android:theme="@style/Theme.CourierDelivery"
+        android:name="application.MyApplication">
         <activity
-            android:name=".MainActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/splashScreenStyle"
+            android:name=".views.activities.SplashScreenActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -20,6 +23,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name=".views.activities.MainActivity"/>
         <meta-data
             android:name="com.google.android.geo.API_KEY"
             android:value="${MAPS_API_KEY}" />

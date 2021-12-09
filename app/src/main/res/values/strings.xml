@@ -2,4 +2,17 @@
     <string name="app_name">Courier delivery</string>
     <string name="routes">Маршруты</string>
     <string name="map">Карта</string>
+
+<!-- Messages-->
+    <string name="sharedPreferencesName">userDetails</string>
+    <string name="defaultTitle">Oops!</string>
+
+    <string name="emptyFieldTitle">Пустоле поле</string>
+    <string name="emptyFieldMessage">Пожалуйста, заполниет все поля.</string>
+
+    <string name="invalidNumberTitle">Неверый формат</string>
+    <string name="invalidNumberMessage">Пожалуйста, введите цифры номера подряд без дополнительных знаков.</string>
+
+    <string name="invalidConfirmationCodeTitle">Неверый код</string>
+    <string name="invalidConfirmationCodeMessage">Пожалуйста, проверьте соотвестие ввденного кода и кода из SMS.</string>
 </resources>

@@ -3,6 +3,23 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/Projects/Actonica/Courier Delivery/app/src/main/res/drawable/bg_bottom_navigation.xml" value="0.24267100977198697" />
+        <entry key="..\:/Projects/Actonica/Courier Delivery/app/src/main/res/drawable/bg_edit_text.xml" value="0.24267100977198697" />
+        <entry key="..\:/Projects/Actonica/Courier Delivery/app/src/main/res/drawable/bg_error_dialog.xml" value="0.24267100977198697" />
+        <entry key="..\:/Projects/Actonica/Courier Delivery/app/src/main/res/drawable/bg_error_dialog_button.xml" value="0.24267100977198697" />
+        <entry key="..\:/Projects/Actonica/Courier Delivery/app/src/main/res/drawable/bg_message_dialog_button.xml" value="0.19930555555555557" />
+        <entry key="..\:/Projects/Actonica/Courier Delivery/app/src/main/res/drawable/bg_rounded_white_24.xml" value="0.24267100977198697" />
+        <entry key="..\:/Projects/Actonica/Courier Delivery/app/src/main/res/drawable/ic_routes.xml" value="0.2450657894736842" />
+        <entry key="..\:/Projects/Actonica/Courier Delivery/app/src/main/res/drawable/layout_splash_screen.xml" value="0.2450657894736842" />
+        <entry key="..\:/Projects/Actonica/Courier Delivery/app/src/main/res/layout/activity_main.xml" value="0.22" />
+        <entry key="..\:/Projects/Actonica/Courier Delivery/app/src/main/res/layout/activity_splash_screen.xml" value="0.2348684210526316" />
+        <entry key="..\:/Projects/Actonica/Courier Delivery/app/src/main/res/layout/dialog_message.xml" value="0.11538461538461539" />
+        <entry key="..\:/Projects/Actonica/Courier Delivery/app/src/main/res/layout/dialog_process.xml" value="0.11538461538461539" />
+        <entry key="..\:/Projects/Actonica/Courier Delivery/app/src/main/res/layout/dialog_progress.xml" value="0.20525956284153005" />
+        <entry key="..\:/Projects/Actonica/Courier Delivery/app/src/main/res/layout/fragment_authorisation.xml" value="0.18" />
+        <entry key="..\:/Projects/Actonica/Courier Delivery/app/src/main/res/layout/fragment_routes_maps.xml" value="0.2348684210526316" />
+        <entry key="..\:/Projects/Actonica/Courier Delivery/app/src/main/res/layout/fragment_splash_screen.xml" value="0.75" />
+        <entry key="..\:/Projects/Actonica/Courier Delivery/app/src/main/res/layout/layout_splash_screen.xml" value="0.2348684210526316" />
         <entry key="..\:/Projects/AndroidProjects/Courierdelivery/app/src/main/res/drawable/ic_arrow_left.xml" value="0.24267100977198697" />
         <entry key="..\:/Projects/AndroidProjects/Courierdelivery/app/src/main/res/layout/activity_main.xml" value="0.25" />
         <entry key="..\:/Projects/AndroidProjects/Courierdelivery/app/src/main/res/layout/fragment_map.xml" value="0.18085106382978725" />
