@@ -15,4 +15,11 @@
 
     <string name="invalidConfirmationCodeTitle">Неверый код</string>
     <string name="invalidConfirmationCodeMessage">Пожалуйста, проверьте соотвестие ввденного кода и кода из SMS.</string>
+
+    <string name="numberNotSentTitle">Код не отправлен</string>
+    <string name="numberNotSentMessage">Пожалуйста, введите номер и нажмите \"Отправить код\".</string>
+
+    <string name="SMSQuotaHasBeenExceededTitle">SMS-квота</string>
+    <string name="SMSQuotaHasBeenExceededMessage">SMS-квота была превышена. Пожалуйста, братитесь к администратору.</string>
+
 </resources>

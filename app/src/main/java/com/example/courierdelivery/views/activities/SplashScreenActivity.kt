@@ -4,25 +4,35 @@ import android.os.Bundle
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.NavController
+import androidx.navigation.NavOptions
 import androidx.navigation.fragment.NavHostFragment
+import androidx.navigation.navOptions
 import com.example.courierdelivery.R
 import com.example.courierdelivery.databinding.ActivitySplashScreenBinding
 import com.example.courierdelivery.viewModels.ViewModelFactory
-import com.example.courierdelivery.viewModels.shared.SplashScreenActAuthFragSharedViewModel
-import com.example.courierdelivery.viewModels.shared.SplashScreenVMStates
+import com.example.courierdelivery.viewModels.activities.SplashScreenActAuthFragSharedViewModel
+import com.example.courierdelivery.viewModels.activities.SplashScreenVMStates
+import com.example.courierdelivery.views.fragments.AuthorisationFragmentDirections
+import com.example.courierdelivery.views.fragments.SplashScreenFragmentDirections
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers.IO
+import kotlinx.coroutines.Dispatchers.Main
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 class SplashScreenActivity : AppCompatActivity() {
 
-    private var binding: ActivitySplashScreenBinding? = null
+    private lateinit var binding: ActivitySplashScreenBinding
     private var navController: NavController? = null
     private val viewModel: SplashScreenActAuthFragSharedViewModel by viewModels { ViewModelFactory }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivitySplashScreenBinding.inflate(layoutInflater)
-        setContentView(binding!!.root)
+        setContentView(binding.root)
         val navHostFragment =
-            supportFragmentManager.findFragmentById(binding!!.navHostFragment.id) as NavHostFragment
+            supportFragmentManager.findFragmentById(binding.navHostFragment.id) as NavHostFragment
         navController = navHostFragment.navController
         observeViewModelStates()
         viewModel.checkCurrentUser()
@@ -32,10 +42,24 @@ class SplashScreenActivity : AppCompatActivity() {
         viewModel.state.observe(this) {
             when (it) {
                 is SplashScreenVMStates.NotAuthorized -> {
-                    val a = navController.hashCode()
-                    navController!!.navigate(
-                        R.id.action_splashScreenFragment_to_authorisationFragment
-                    )
+                    CoroutineScope(IO).launch {
+                        delay(1500)
+                        withContext(Main) {
+                            navController!!.navigate(
+                                SplashScreenFragmentDirections.actionSplashScreenFragmentToAuthorisationFragment()
+                            )
+                        }
+                    }
+                }
+                is SplashScreenVMStates.Authorized -> {
+                    CoroutineScope(IO).launch {
+                        delay(1500)
+                        withContext(Main) {
+                            navController!!.navigate(
+                                SplashScreenFragmentDirections.actionSplashScreenFragmentToMainActivity()
+                            )
+                        }
+                    }
                 }
                 else -> {} // DefaultState
             }

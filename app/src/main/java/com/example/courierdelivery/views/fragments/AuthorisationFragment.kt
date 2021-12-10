@@ -10,16 +10,14 @@ import androidx.navigation.fragment.findNavController
 import com.example.courierdelivery.R
 import com.example.courierdelivery.databinding.FragmentAuthorisationBinding
 import com.example.courierdelivery.viewModels.ViewModelFactory
-import com.example.courierdelivery.viewModels.shared.SplashScreenActAuthFragSharedViewModel
-import com.example.courierdelivery.viewModels.shared.SplashScreenVMStates
+import com.example.courierdelivery.viewModels.fragments.AuthFragmentVMStates
+import com.example.courierdelivery.viewModels.fragments.AuthFragmentViewModel
 import com.example.courierdelivery.views.dialogs.ProcessAlertDialog
 import com.google.firebase.auth.*
 import extensions.createMessageDialog
 import extensions.logD
 import extensions.logE
 import tools.ErrorMessages.emptyFieldMessage
-import tools.ErrorMessages.invalidConfirmationCodeMessage
-import tools.ErrorMessages.invalidNumberMessage
 import java.util.concurrent.TimeUnit
 
 class AuthorisationFragment : Fragment() {
@@ -28,7 +26,7 @@ class AuthorisationFragment : Fragment() {
     private var auth = FirebaseAuth.getInstance()
 
     private var binding: FragmentAuthorisationBinding? = null
-    private val viewModel: SplashScreenActAuthFragSharedViewModel by activityViewModels { ViewModelFactory }
+    private val viewModel: AuthFragmentViewModel by activityViewModels { ViewModelFactory }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -46,30 +44,26 @@ class AuthorisationFragment : Fragment() {
     private fun observeViewModelStates() {
         viewModel.state.observe(viewLifecycleOwner) {
             when (it) {
-                is SplashScreenVMStates.EmptyField -> {
+                is AuthFragmentVMStates.EmptyField -> {
                     requireContext().createMessageDialog(emptyFieldMessage)
                         ?.show(parentFragmentManager, "")
                 }
-                is SplashScreenVMStates.Validation -> {
+                is AuthFragmentVMStates.Validation -> {
                     if (ProcessAlertDialog.isAdded) return@observe
                     ProcessAlertDialog.show(parentFragmentManager, "")
                 }
-                is SplashScreenVMStates.CodeSent -> {
+                is AuthFragmentVMStates.CodeSent -> {
                     ProcessAlertDialog.onSuccess()
                 }
-                is SplashScreenVMStates.InvalidNumber -> {
-                    ProcessAlertDialog.dismiss()
-                    requireContext().createMessageDialog(invalidNumberMessage)
+                is AuthFragmentVMStates.VerificationCompleted -> {
+                    signInWithPhoneAuthCredential(it.credential)
+                }
+                else -> {
+                    if(it is AuthFragmentVMStates.Default) return@observe
+                    val message = it.errorMessage ?: return@observe
+                    requireContext().createMessageDialog(message)
                         ?.show(parentFragmentManager, "")
                 }
-                is SplashScreenVMStates.VerificationCompleted -> {
-                    signInWithPhoneAuthCredential(it.redential)
-                }
-                is SplashScreenVMStates.InvalidConfirmationCode -> {
-                    requireContext().createMessageDialog(invalidConfirmationCodeMessage)
-                        ?.show(parentFragmentManager, "")
-                }
-                else -> {} //DefaultState
             }
         }
     }
@@ -93,18 +87,17 @@ class AuthorisationFragment : Fragment() {
                 if (task.isSuccessful) {
                     logD("signInWithCredential:success")
                     val user = task.result?.user
-
-                    // TODO: Add the number to sharedPreferences
-                    findNavController().navigate(R.id.mainActivity)
+                    viewModel.saveUserNumber(user?.phoneNumber!!)
+                    findNavController().navigate(
+                        AuthorisationFragmentDirections.actionAuthorisationFragmentToMainActivity()
+                    )
                 } else {
                     logE("signInWithCredential:failure. Exception: ${task.exception}")
                     if (task.exception is FirebaseAuthInvalidCredentialsException) {
                         viewModel.invalidConfirmationCode()
                     }
-                    // Update UI
                 }
             }
     }
-
 
 }

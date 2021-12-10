@@ -19,4 +19,13 @@ object ErrorMessages {
         R.string.invalidConfirmationCodeMessage
     )
 
+    val numberNotSentMessage = ErrorMessage(
+        R.string.numberNotSentTitle,
+        R.string.numberNotSentMessage
+    )
+
+    val quotaHasBeenExceededMessage = ErrorMessage(
+        R.string.numberNotSentTitle,
+        R.string.numberNotSentMessage
+    )
 }

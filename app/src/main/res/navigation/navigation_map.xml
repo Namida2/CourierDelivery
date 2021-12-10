@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/navigation_map"
+    app:startDestination="@id/mapFragment2">
+
+    <fragment
+        android:id="@+id/mapFragment2"
+        android:name="com.example.courierdelivery.views.fragments.MapFragment"
+        android:label="MapFragment" />
+</navigation>
