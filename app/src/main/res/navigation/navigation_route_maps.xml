@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/navigation_routes_maps"
+    app:startDestination="@id/routeMapsFragment">
+
+    <fragment
+        android:id="@+id/routeMapsFragment"
+        android:name="com.example.courierdelivery.views.fragments.RouteMapsFragment"
+        android:label="RouteMapsFragment" >
+        <action
+            android:id="@+id/action_routeMapsFragment_to_routeMapsDetailFragment"
+            app:destination="@id/routeMapsDetailFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/routeMapsDetailFragment"
+        android:name="com.example.courierdelivery.views.fragments.RouteMapsDetailFragment"
+        android:label="RouteMapsDetailFragment" >
+        <action
+            android:id="@+id/action_routeMapsDetailFragment_to_routeMapsFragment"
+            app:destination="@id/routeMapsFragment" />
+    </fragment>
+</navigation>

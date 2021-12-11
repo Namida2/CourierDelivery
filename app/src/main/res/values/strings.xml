@@ -3,9 +3,14 @@
     <string name="routes">Маршруты</string>
     <string name="map">Карта</string>
 
-<!-- Messages-->
     <string name="sharedPreferencesName">userDetails</string>
+    <!-- Messages-->
     <string name="defaultTitle">Oops!</string>
+    <string name="defaultMessage">Что-то пошло не так, повторите попытку позже.</string>
+
+    <string name="emptyRouteMapsListTitle">Пусто</string>
+    <string name="emptyRouteMapsListMessage">Для вас еще нет маршрутных листов. Повторите попытку позже.</string>
+
 
     <string name="emptyFieldTitle">Пустоле поле</string>
     <string name="emptyFieldMessage">Пожалуйста, заполниет все поля.</string>

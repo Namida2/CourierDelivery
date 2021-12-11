@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <data>
+        <variable
+            name="viewModel"
+            type="com.example.courierdelivery.viewModels.fragments.RouteMapsFragmentViewModel" />
+    </data>
+
+    <androidx.coordinatorlayout.widget.CoordinatorLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <Button
+            style="@style/buttonStyle"
+            android:layout_width="match_parent"
+            android:layout_gravity="bottom"
+            android:layout_marginBottom="150dp"
+            android:layout_height="wrap_content"
+            android:text="Обновить список"/>
+
+    </androidx.coordinatorlayout.widget.CoordinatorLayout>
+
+</layout>

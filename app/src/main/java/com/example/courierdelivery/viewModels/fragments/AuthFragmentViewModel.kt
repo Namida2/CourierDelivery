@@ -13,11 +13,10 @@ import entities.ErrorMessage
 import entities.Event
 import extensions.logD
 import extensions.logE
-import tools.ErrorMessages
-import tools.ErrorMessages.invalidConfirmationCodeMessage
-import tools.ErrorMessages.invalidNumberMessage
-import tools.ErrorMessages.numberNotSentMessage
-import tools.ErrorMessages.quotaHasBeenExceededMessage
+import entities.ErrorMessages.invalidConfirmationCodeMessage
+import entities.ErrorMessages.invalidNumberMessage
+import entities.ErrorMessages.numberNotSentMessage
+import entities.ErrorMessages.quotaHasBeenExceededMessage
 
 sealed class AuthFragmentVMStates {
     open val errorMessage: ErrorMessage? = null

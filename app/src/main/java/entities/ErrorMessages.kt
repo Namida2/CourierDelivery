@@ -1,9 +1,20 @@
-package tools
+package entities
 
 import com.example.courierdelivery.R
 import entities.ErrorMessage
 
 object ErrorMessages {
+
+    val defaultMessage = ErrorMessage(
+        R.string.defaultTitle,
+        R.string.defaultMessage
+    )
+
+    val emptyRouteMapsListMessage = ErrorMessage(
+        R.string.emptyRouteMapsListTitle,
+        R.string.emptyRouteMapsListMessage
+    )
+
     val emptyFieldMessage = ErrorMessage(
         R.string.emptyFieldTitle,
         R.string.emptyFieldMessage

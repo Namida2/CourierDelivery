@@ -7,7 +7,6 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
-import com.example.courierdelivery.R
 import com.example.courierdelivery.databinding.FragmentAuthorisationBinding
 import com.example.courierdelivery.viewModels.ViewModelFactory
 import com.example.courierdelivery.viewModels.fragments.AuthFragmentVMStates
@@ -17,7 +16,7 @@ import com.google.firebase.auth.*
 import extensions.createMessageDialog
 import extensions.logD
 import extensions.logE
-import tools.ErrorMessages.emptyFieldMessage
+import entities.ErrorMessages.emptyFieldMessage
 import java.util.concurrent.TimeUnit
 
 class AuthorisationFragment : Fragment() {

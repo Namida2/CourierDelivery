@@ -4,15 +4,12 @@ import android.os.Bundle
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.NavController
-import androidx.navigation.NavOptions
+import androidx.navigation.NavDirections
 import androidx.navigation.fragment.NavHostFragment
-import androidx.navigation.navOptions
-import com.example.courierdelivery.R
 import com.example.courierdelivery.databinding.ActivitySplashScreenBinding
 import com.example.courierdelivery.viewModels.ViewModelFactory
 import com.example.courierdelivery.viewModels.activities.SplashScreenActAuthFragSharedViewModel
 import com.example.courierdelivery.viewModels.activities.SplashScreenVMStates
-import com.example.courierdelivery.views.fragments.AuthorisationFragmentDirections
 import com.example.courierdelivery.views.fragments.SplashScreenFragmentDirections
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers.IO
@@ -42,26 +39,23 @@ class SplashScreenActivity : AppCompatActivity() {
         viewModel.state.observe(this) {
             when (it) {
                 is SplashScreenVMStates.NotAuthorized -> {
-                    CoroutineScope(IO).launch {
-                        delay(1500)
-                        withContext(Main) {
-                            navController!!.navigate(
-                                SplashScreenFragmentDirections.actionSplashScreenFragmentToAuthorisationFragment()
-                            )
-                        }
-                    }
+                    navigateTo(SplashScreenFragmentDirections.actionSplashScreenFragmentToAuthorisationFragment())
                 }
                 is SplashScreenVMStates.Authorized -> {
-                    CoroutineScope(IO).launch {
-                        delay(1500)
-                        withContext(Main) {
-                            navController!!.navigate(
-                                SplashScreenFragmentDirections.actionSplashScreenFragmentToMainActivity()
-                            )
-                        }
-                    }
+                    navigateTo(SplashScreenFragmentDirections.actionSplashScreenFragmentToMainActivity())
                 }
                 else -> {} // DefaultState
+            }
+        }
+    }
+
+    private fun navigateTo(direction: NavDirections) {
+        CoroutineScope(IO).launch {
+            delay(1500)
+            withContext(Main) {
+                navController!!.navigate(
+                    direction
+                )
             }
         }
     }

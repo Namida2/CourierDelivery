@@ -3,6 +3,8 @@ package di
 import android.content.SharedPreferences
 import com.example.courierdelivery.models.SplashScreenModel
 import com.example.courierdelivery.models.interfaces.AuthFragmentModelInterface
+import com.example.courierdelivery.models.interfaces.RouteMapsModelInterface
+import com.example.courierdelivery.views.fragments.RouteMapsFragment
 import dagger.BindsInstance
 import dagger.Component
 import di.modules.FirebaseModule
@@ -19,6 +21,9 @@ interface AppComponent {
         ): AppComponent
     }
 
+    fun inject(fragment: RouteMapsFragment)
+
     fun provideSplashScreenModel(): SplashScreenModel
     fun provideAuthFragmentModel(): AuthFragmentModelInterface
+    fun provideRouteMapModelModel(): RouteMapsModelInterface
 }
