@@ -1,6 +1,7 @@
 package entities.routeMaps
 
 data class RouteMap(
+    val id: Int,
     val courierNumber: String,
     val routeId: Int,
     val routeItems: List<RouteItem>,

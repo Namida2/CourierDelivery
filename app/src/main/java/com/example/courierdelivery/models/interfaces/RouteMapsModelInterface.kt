@@ -1,10 +1,11 @@
 package com.example.courierdelivery.models.interfaces
 
 import entities.ErrorMessage
+import entities.RouteMapInfo
 
 interface RouteMapsModelInterface {
     fun getRouteMaps(
-        onSuccess: (isEmpty: Boolean) -> Unit,
+        onSuccess: (routeMaps: List<RouteMapInfo>) -> Unit,
         onError: (message: ErrorMessage?) -> Unit
     )
 }

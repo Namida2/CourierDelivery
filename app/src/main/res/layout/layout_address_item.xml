@@ -15,23 +15,23 @@
             app:layout_constraintTop_toTopOf="@+id/topSpace" />
 
         <ImageView
-            android:id="@+id/imageView"
+            android:id="@+id/point"
             android:layout_width="10dp"
             android:layout_height="10dp"
             android:layout_marginStart="12dp"
+            android:backgroundTint="@color/blue"
             android:background="@drawable/ic_point"
-            android:backgroundTint="@color/black"
             app:layout_constraintBottom_toBottomOf="@+id/textGetTo"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="@+id/textGetTo" />
 
         <TextView
-            android:id="@+id/orderNumber"
+            android:id="@+id/orderId"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
             android:fontFamily="@font/montserrat_semi_bold"
-            android:text="№П1_1"
+            android:text="№П1_12"
             android:textColor="@color/black"
             android:textSize="14sp"
             app:layout_constraintStart_toStartOf="@+id/textGetTo"
@@ -42,39 +42,44 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
-            android:layout_marginTop="8dp"
+            android:layout_marginTop="12dp"
             android:fontFamily="@font/montserrat_semi_bold"
             android:text="Добраться:"
             android:textColor="@color/black"
             android:textSize="14sp"
-            app:layout_constraintStart_toEndOf="@+id/imageView"
-            app:layout_constraintTop_toBottomOf="@+id/orderNumber" />
+            app:layout_constraintStart_toEndOf="@+id/point"
+            app:layout_constraintTop_toBottomOf="@+id/orderId" />
+
 
         <TextView
             android:id="@+id/address"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
+            android:layout_marginEnd="16dp"
             android:fontFamily="@font/montserrat_regular"
-            android:text="Васильева ул., 10А, кв 501"
+            android:text="Васильева ул., 10А, кв 50"
             android:textColor="@color/black"
             android:textSize="14sp"
-            app:layout_constraintBottom_toBottomOf="@+id/textGetTo"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toEndOf="@+id/textGetTo"
             app:layout_constraintTop_toTopOf="@+id/textGetTo" />
 
-
         <TextView
             android:id="@+id/action"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="12dp"
+            android:layout_marginEnd="16dp"
             android:fontFamily="@font/montserrat_semi_bold"
             android:text="Забрать заказ у поставщика"
             android:textColor="@color/black"
             android:textSize="14sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="@+id/textGetTo"
-            app:layout_constraintTop_toBottomOf="@+id/textGetTo" />
+            app:layout_constraintTop_toBottomOf="@+id/address" />
 
         <View
             android:id="@+id/horizontalDelimiter"
@@ -99,7 +104,7 @@
             android:id="@+id/topSpace"
             android:layout_width="0dp"
             android:layout_height="8dp"
-            app:layout_constraintBottom_toTopOf="@+id/orderNumber"
+            app:layout_constraintBottom_toTopOf="@+id/orderId"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="@+id/horizontalDelimiter" />

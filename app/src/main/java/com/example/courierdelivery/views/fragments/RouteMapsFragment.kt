@@ -1,6 +1,5 @@
 package com.example.courierdelivery.views.fragments
 
-import android.annotation.SuppressLint
 import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -8,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
+import androidx.navigation.fragment.findNavController
 import com.example.courierdelivery.R
 import com.example.courierdelivery.adapters.RouteMapsAdapter
 import com.example.courierdelivery.adapters.itemDecorations.RouteMapsItemDecorations
@@ -19,16 +19,15 @@ import extensions.Animations.prepareHide
 import extensions.Animations.prepareShow
 import extensions.appComponent
 import extensions.createMessageDialog
-import javax.inject.Inject
 
 class RouteMapsFragment: Fragment() {
 
-    @Inject
-    lateinit var adapter: RouteMapsAdapter
+    private var adapter = RouteMapsAdapter()
     private lateinit var binding: FragmentRouteMapsBinding
     private val viewModel: RouteMapsFragmentViewModel by activityViewModels { ViewModelFactory }
     private var smallMargin: Int? = null
     private var largeMargin: Int? = null
+
     override fun onAttach(context: Context) {
         super.onAttach(context)
         requireContext().appComponent.inject(this)
@@ -53,7 +52,9 @@ class RouteMapsFragment: Fragment() {
         binding = FragmentRouteMapsBinding.inflate(inflater, container, false)
         binding.viewModel = viewModel
         with(binding) {
-            routeMapsRecyclerView.adapter = adapter
+            routeMapsRecyclerView.adapter = adapter.also {
+                it.onRouteMapClick = ::onRouteMapClick
+            }
             routeMapsRecyclerView.addItemDecoration(
                 RouteMapsItemDecorations(
                     smallMargin!!,
@@ -63,7 +64,6 @@ class RouteMapsFragment: Fragment() {
         }
     }
 
-    @SuppressLint("NotifyDataSetChanged")
     private fun observeViewModelStates() {
         viewModel.state.observe(viewLifecycleOwner) {
             when (it) {
@@ -79,13 +79,18 @@ class RouteMapsFragment: Fragment() {
                         ?.show(parentFragmentManager, "")
                 }
                 is RouteMapsVMStates.ReadingWasSuccessful -> {
-                    adapter.notifyDataSetChanged()
                     binding.progressIndicator.prepareHide().start()
+                    adapter.setRouteMaps(it.routeMaps)
                 }
                 else -> {}//Default
             }
         }
+    }
 
+    private fun onRouteMapClick(routeMapId: Int) {
+        val direction = RouteMapsFragmentDirections
+            .actionRouteMapsFragmentToRouteMapsDetailFragment(routeMapId)
+        findNavController().navigate(direction)
     }
 
 }

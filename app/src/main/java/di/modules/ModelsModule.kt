@@ -1,14 +1,11 @@
 package di.modules
 
 import com.example.courierdelivery.models.AuthFragmentModel
+import com.example.courierdelivery.models.RouteMapsDetailModel
 import com.example.courierdelivery.models.RouteMapsFragmentModel
 import com.example.courierdelivery.models.SplashScreenModel
-import com.example.courierdelivery.models.interfaces.AuthFragmentModelInterface
-import com.example.courierdelivery.models.interfaces.RouteMapServicesInterface
-import com.example.courierdelivery.models.interfaces.RouteMapsModelInterface
-import com.example.courierdelivery.models.interfaces.SplashScreenModelInterface
-import com.example.courierdelivery.models.services.RouteMapsServices
-import com.example.courierdelivery.viewModels.fragments.RouteMapsFragmentViewModel
+import com.example.courierdelivery.models.interfaces.*
+import com.example.courierdelivery.models.services.RouteMapsService
 import dagger.Binds
 import dagger.Module
 import javax.inject.Singleton
@@ -27,7 +24,8 @@ interface ModelsModule {
     @Singleton
     fun bindRouteMapsModel(model: RouteMapsFragmentModel): RouteMapsModelInterface
 
+
     @Binds
     @Singleton
-    fun bindRouteMapsServices(model: RouteMapsServices): RouteMapServicesInterface
+    fun bindRouteMapsDetailModel(model: RouteMapsDetailModel): RouteMapsDetailModelInterface
 }

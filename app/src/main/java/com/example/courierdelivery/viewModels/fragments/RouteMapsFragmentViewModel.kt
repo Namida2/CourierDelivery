@@ -7,11 +7,16 @@ import com.example.courierdelivery.models.interfaces.RouteMapsModelInterface
 import entities.ErrorMessage
 import entities.ErrorMessages.defaultMessage
 import entities.ErrorMessages.emptyRouteMapsListMessage
+import entities.RouteMapInfo
+import entities.routeMaps.RouteMap
 
 sealed class RouteMapsVMStates {
     object Default : RouteMapsVMStates()
     object ReadingData : RouteMapsVMStates()
-    object ReadingWasSuccessful : RouteMapsVMStates()
+    class ReadingWasSuccessful(
+        val routeMaps: List<RouteMapInfo>,
+    ) : RouteMapsVMStates()
+
     class ReadingWasFailure(
         val message: ErrorMessage = defaultMessage,
     ) : RouteMapsVMStates()
@@ -33,11 +38,11 @@ class RouteMapsFragmentViewModel(
         if (state.value is RouteMapsVMStates.ReadingData) return
         _state.value = RouteMapsVMStates.ReadingData
         model.getRouteMaps(onSuccess = {
-            if (it) {
+            if (it.isEmpty()) {
                 _state.value = RouteMapsVMStates.DataIsEmpty()
                 return@getRouteMaps
             }
-            _state.value = RouteMapsVMStates.ReadingWasSuccessful
+            _state.value = RouteMapsVMStates.ReadingWasSuccessful(it)
         }, onError = {
             _state.value = RouteMapsVMStates.ReadingWasFailure(it ?: defaultMessage)
         })

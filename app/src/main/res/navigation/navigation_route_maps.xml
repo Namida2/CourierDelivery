@@ -1,24 +1,36 @@
 <?xml version="1.0" encoding="utf-8"?>
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/navigation_routes_maps"
     app:startDestination="@id/routeMapsFragment">
 
     <fragment
         android:id="@+id/routeMapsFragment"
         android:name="com.example.courierdelivery.views.fragments.RouteMapsFragment"
-        android:label="RouteMapsFragment" >
+        android:label="RouteMapsFragment">
         <action
             android:id="@+id/action_routeMapsFragment_to_routeMapsDetailFragment"
-            app:destination="@id/routeMapsDetailFragment" />
+            app:destination="@id/routeMapsDetailFragment"
+            app:enterAnim="@anim/nav_default_enter_anim"
+            app:exitAnim="@anim/nav_default_exit_anim"
+
+            app:popEnterAnim="@anim/nav_default_pop_enter_anim"
+            app:popExitAnim="@anim/nav_default_pop_exit_anim" />
     </fragment>
     <fragment
         android:id="@+id/routeMapsDetailFragment"
         android:name="com.example.courierdelivery.views.fragments.RouteMapsDetailFragment"
-        android:label="RouteMapsDetailFragment" >
+        android:label="RouteMapsDetailFragment">
+        <argument
+            android:name="routeMapId"
+            app:argType="integer" />
         <action
             android:id="@+id/action_routeMapsDetailFragment_to_routeMapsFragment"
-            app:destination="@id/routeMapsFragment" />
+            app:destination="@id/routeMapsFragment"
+            app:enterAnim="@anim/nav_default_enter_anim"
+            app:exitAnim="@anim/nav_default_exit_anim"
+
+            app:popEnterAnim="@anim/nav_default_pop_enter_anim"
+            app:popExitAnim="@anim/nav_default_pop_exit_anim" />
     </fragment>
 </navigation>

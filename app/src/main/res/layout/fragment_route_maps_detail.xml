@@ -1,24 +1,34 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
 
     <data>
         <variable
             name="viewModel"
-            type="com.example.courierdelivery.viewModels.fragments.RouteMapsFragmentViewModel" />
+            type="com.example.courierdelivery.viewModels.fragments.RouteMapsDetailViewModel" />
     </data>
 
     <androidx.coordinatorlayout.widget.CoordinatorLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <Button
-            style="@style/buttonStyle"
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/addressesRecyclerView"
             android:layout_width="match_parent"
-            android:layout_gravity="bottom"
-            android:layout_marginBottom="150dp"
+            android:layout_height="match_parent"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            tools:listitem="@layout/layout_address_item" />
+
+        <com.google.android.material.progressindicator.CircularProgressIndicator
+            android:id="@+id/progressIndicator"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Обновить список"/>
+            android:layout_gravity="center"
+            android:indeterminate="true"
+            android:alpha="0"
+            app:trackCornerRadius="2dp"
+            app:trackThickness="2dp" />
 
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
-
 </layout>

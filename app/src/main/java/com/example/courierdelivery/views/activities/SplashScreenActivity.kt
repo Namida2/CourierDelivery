@@ -3,9 +3,11 @@ package com.example.courierdelivery.views.activities
 import android.os.Bundle
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat
 import androidx.navigation.NavController
 import androidx.navigation.NavDirections
 import androidx.navigation.fragment.NavHostFragment
+import com.example.courierdelivery.R
 import com.example.courierdelivery.databinding.ActivitySplashScreenBinding
 import com.example.courierdelivery.viewModels.ViewModelFactory
 import com.example.courierdelivery.viewModels.activities.SplashScreenActAuthFragSharedViewModel

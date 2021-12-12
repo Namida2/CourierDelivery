@@ -6,15 +6,14 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.courierdelivery.databinding.LayoutRouteMapBinding
-import com.example.courierdelivery.models.interfaces.RouteMapServicesInterface
-import com.example.courierdelivery.models.services.RouteMapsService
-import javax.inject.Inject
+import entities.RouteMapInfo
+import entities.routeMaps.RouteMap
 
-class RouteMapsAdapter @Inject constructor(
-    private val routeMapsService: RouteMapsService
+class RouteMapsAdapter (
+    private var routeMapsInfo: List<RouteMapInfo> = listOf()
 ) : RecyclerView.Adapter<RouteMapsAdapter.ViewHolder>(), View.OnClickListener {
 
-    private val dot: String = "."
+    var onRouteMapClick: ((routeMapId: Int) -> Unit)? = null
 
     class ViewHolder(
         val binding: LayoutRouteMapBinding,
@@ -30,17 +29,23 @@ class RouteMapsAdapter @Inject constructor(
     @SuppressLint("SetTextI18n")
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         with(holder.binding) {
-            number.text = position.toString() + dot
-            addressesCount.text = routeMapsService.routeMaps[position]
+            number.text = position.toString()
+            addressesCount.text = routeMapsInfo[position].routeMap
                 .routeItems.size.toString()
-            progress.text = routeMapsService.routeMaps[position].status
+            progress.text = routeMapsInfo[position].routeMap.status
+            root.tag = routeMapsInfo[position].routeMap.routeId
         }
-
     }
 
-    override fun getItemCount(): Int = routeMapsService.getRouteMapsCount()
+    @SuppressLint("NotifyDataSetChanged")
+    fun setRouteMaps(routeMapsInfo: List<RouteMapInfo>) {
+        this.routeMapsInfo = routeMapsInfo
+        this.notifyDataSetChanged()
+    }
+
+    override fun getItemCount(): Int = routeMapsInfo.size
 
     override fun onClick(v: View?) {
-        TODO("Not yet implemented")
+        onRouteMapClick?.invoke(v?.tag as Int)
     }
 }

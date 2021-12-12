@@ -3,6 +3,7 @@ package di
 import android.content.SharedPreferences
 import com.example.courierdelivery.models.SplashScreenModel
 import com.example.courierdelivery.models.interfaces.AuthFragmentModelInterface
+import com.example.courierdelivery.models.interfaces.RouteMapsDetailModelInterface
 import com.example.courierdelivery.models.interfaces.RouteMapsModelInterface
 import com.example.courierdelivery.views.fragments.RouteMapsFragment
 import dagger.BindsInstance
@@ -25,5 +26,6 @@ interface AppComponent {
 
     fun provideSplashScreenModel(): SplashScreenModel
     fun provideAuthFragmentModel(): AuthFragmentModelInterface
-    fun provideRouteMapModelModel(): RouteMapsModelInterface
+    fun provideRouteMapsModel(): RouteMapsModelInterface
+    fun provideRouteMapsDetailModel(): RouteMapsDetailModelInterface
 }
