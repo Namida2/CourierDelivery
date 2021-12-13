@@ -59,6 +59,12 @@ class RouteMapsService @Inject constructor() {
         }
     }
 
+    //TODO: Prohibit marking multiply routeItems
+    //TODO: Prohibit changing the route map while working
+    //TODO: Add logic to other buttons
+    //TODO: Add showing a mark on the map
+    //TODO: Start working with retrofit
+
     fun changeRouteIemStatus(routeItem: RouteItem, status: RouteItemStatus) {
         val routeItems = mutableListOf<RouteItem>()
         currentRouteMapInfo!!.routeMap.routeItems.forEachIndexed { index, item ->
