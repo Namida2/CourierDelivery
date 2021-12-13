@@ -5,6 +5,7 @@ import androidx.lifecycle.ViewModelProvider
 import com.example.courierdelivery.viewModels.activities.MainActivityViewModel
 import com.example.courierdelivery.viewModels.fragments.AuthFragmentViewModel
 import com.example.courierdelivery.viewModels.activities.SplashScreenActAuthFragSharedViewModel
+import com.example.courierdelivery.viewModels.dialogs.RouteItemDialogMenuViewModel
 import com.example.courierdelivery.viewModels.fragments.RouteMapsDetailViewModel
 import com.example.courierdelivery.viewModels.fragments.RouteMapsFragmentViewModel
 import di.AppComponent
@@ -13,6 +14,8 @@ object ViewModelFactory : ViewModelProvider.Factory {
     lateinit var appComponent: AppComponent
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
         val viewModel = when (modelClass) {
+            RouteItemDialogMenuViewModel::class.java ->
+                RouteItemDialogMenuViewModel(appComponent.provideRouteItemDialogMenuModel())
             RouteMapsDetailViewModel::class.java ->
                 RouteMapsDetailViewModel(appComponent.provideRouteMapsDetailModel())
             MainActivityViewModel::class.java ->

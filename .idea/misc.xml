@@ -25,8 +25,14 @@
         <entry key="..\:/Projects/AndroidProjects/Courierdelivery/app/src/main/res/layout/fragment_map.xml" value="0.18085106382978725" />
         <entry key="..\:/Projects/AndroidProjects/Courierdelivery/app/src/main/res/menu/menu_waiter.xml" value="0.2348684210526316" />
         <entry key="..\:/Projects/Courier delivery/app/src/main/res/drawable/bg_rounded_white_24.xml" value="0.24267100977198697" />
+        <entry key="..\:/Projects/Courier delivery/app/src/main/res/drawable/ic_arrow_right.xml" value="0.2450657894736842" />
         <entry key="..\:/Projects/Courier delivery/app/src/main/res/layout/activity_main.xml" value="0.2348684210526316" />
         <entry key="..\:/Projects/Courier delivery/app/src/main/res/layout/activity_splash_screen.xml" value="0.11538461538461539" />
+        <entry key="..\:/Projects/Courier delivery/app/src/main/res/layout/address_dialog_menu.xml" value="0.22" />
+        <entry key="..\:/Projects/Courier delivery/app/src/main/res/layout/dialog_address_menu.xml" value="0.24121621621621622" />
+        <entry key="..\:/Projects/Courier delivery/app/src/main/res/layout/dialog_message.xml" value="0.2348684210526316" />
+        <entry key="..\:/Projects/Courier delivery/app/src/main/res/layout/dialog_route_item_detail.xml" value="0.25" />
+        <entry key="..\:/Projects/Courier delivery/app/src/main/res/layout/dialog_route_item_menu.xml" value="0.11844724618447246" />
         <entry key="..\:/Projects/Courier delivery/app/src/main/res/layout/fragment_authorisation.xml" value="0.11538461538461539" />
         <entry key="..\:/Projects/Courier delivery/app/src/main/res/layout/fragment_route_maps.xml" value="0.2" />
         <entry key="..\:/Projects/Courier delivery/app/src/main/res/layout/fragment_route_maps_container.xml" value="0.22472677595628415" />
@@ -35,6 +41,7 @@
         <entry key="..\:/Projects/Courier delivery/app/src/main/res/layout/fragment_splash_screen.xml" value="0.12" />
         <entry key="..\:/Projects/Courier delivery/app/src/main/res/layout/lauout_route_map.xml" value="0.2348684210526316" />
         <entry key="..\:/Projects/Courier delivery/app/src/main/res/layout/layout_address_item.xml" value="0.35735735735735735" />
+        <entry key="..\:/Projects/Courier delivery/app/src/main/res/layout/layout_route_item.xml" value="0.1" />
         <entry key="..\:/Projects/Courier delivery/app/src/main/res/layout/layout_route_map.xml" value="0.33" />
         <entry key="..\:/Projects/Courier delivery/app/src/main/res/menu/menu_main.xml" value="0.1527777777777778" />
       </map>

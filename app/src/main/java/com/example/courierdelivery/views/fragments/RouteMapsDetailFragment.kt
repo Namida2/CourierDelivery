@@ -12,18 +12,22 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.navArgs
 import com.example.courierdelivery.R
-import com.example.courierdelivery.adapters.AddressesAdapter
-import com.example.courierdelivery.adapters.RouteMapsAdapter
+import com.example.courierdelivery.adapters.RouteItemsAdapter
 import com.example.courierdelivery.adapters.itemDecorations.RouteMapsDetailItemsDecorations
 import com.example.courierdelivery.databinding.FragmentRouteMapsDetailBinding
 import com.example.courierdelivery.viewModels.ViewModelFactory
 import com.example.courierdelivery.viewModels.fragments.RouteMapsDetailViewModel
+import com.example.courierdelivery.views.dialogs.RouteItemsDialogMenu
+import entities.routeMaps.RouteItem
 
 class RouteMapsDetailFragment : Fragment() {
 
     private lateinit var binding: FragmentRouteMapsDetailBinding
     private val viewModel: RouteMapsDetailViewModel by activityViewModels { ViewModelFactory }
     private val args: RouteMapsDetailFragmentArgs by navArgs()
+    private var menuDialog: RouteItemsDialogMenu = RouteItemsDialogMenu()
+    private var adapter: RouteItemsAdapter? = null
+
     private var largeMargin: Int? = null
     private var defaultColorStateList: ColorStateList? = null
     private var completedColorStateList: ColorStateList? = null
@@ -33,7 +37,7 @@ class RouteMapsDetailFragment : Fragment() {
         super.onAttach(context)
         largeMargin = resources.getDimensionPixelSize(R.dimen.large_margin)
         defaultColorStateList = ContextCompat.getColorStateList(requireContext(), R.color.black)
-        completedColorStateList = ContextCompat.getColorStateList(requireContext(), android.R.color.darker_gray)
+        completedColorStateList = ContextCompat.getColorStateList(requireContext(), R.color.gray)
         selectedColorStateList = ContextCompat.getColorStateList(requireContext(), R.color.blue)
     }
 
@@ -43,6 +47,7 @@ class RouteMapsDetailFragment : Fragment() {
         savedInstanceState: Bundle?,
     ): View? {
         initBinding(inflater, container)
+        observeRouteMapInfoChangedEvent()
         return binding.root
     }
 
@@ -57,15 +62,34 @@ class RouteMapsDetailFragment : Fragment() {
         container: ViewGroup?,
     ) {
         binding = FragmentRouteMapsDetailBinding.inflate(inflater, container, false)
-        binding.addressesRecyclerView.adapter = AddressesAdapter(
-            viewModel.getRouteMapById(args.routeMapId),
+        val routeMapInfo = viewModel.getRouteMapById(args.routeMapId)
+        adapter = RouteItemsAdapter(
+            routeMapInfo,
             defaultColorStateList!!,
             completedColorStateList!!,
-            selectedColorStateList!!
+            selectedColorStateList!!,
+            ::onAddressClick
         )
+        binding.addressesRecyclerView.adapter = adapter
+        binding.addressesRecyclerView.itemAnimator = null
+        adapter!!.submitList(routeMapInfo.routeMap.routeItems)
+
         binding.addressesRecyclerView.addItemDecoration(
             RouteMapsDetailItemsDecorations(largeMargin!!)
         )
+    }
+
+    private fun onAddressClick(routeItem: RouteItem) {
+        if(menuDialog.isAdded) return
+        menuDialog.routeItem = routeItem
+        menuDialog.show(parentFragmentManager, "")
+    }
+
+    private fun observeRouteMapInfoChangedEvent() {
+        viewModel.routeMapInfoChangedEvent.observe(viewLifecycleOwner) {
+            val routeItems = it.getData() ?: return@observe
+            adapter!!.submitList(routeItems)
+        }
     }
 
 }

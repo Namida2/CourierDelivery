@@ -3,6 +3,7 @@ package di
 import android.content.SharedPreferences
 import com.example.courierdelivery.models.SplashScreenModel
 import com.example.courierdelivery.models.interfaces.AuthFragmentModelInterface
+import com.example.courierdelivery.models.interfaces.RouteItemDialogMenuModelInterface
 import com.example.courierdelivery.models.interfaces.RouteMapsDetailModelInterface
 import com.example.courierdelivery.models.interfaces.RouteMapsModelInterface
 import com.example.courierdelivery.views.fragments.RouteMapsFragment
@@ -28,4 +29,5 @@ interface AppComponent {
     fun provideAuthFragmentModel(): AuthFragmentModelInterface
     fun provideRouteMapsModel(): RouteMapsModelInterface
     fun provideRouteMapsDetailModel(): RouteMapsDetailModelInterface
+    fun provideRouteItemDialogMenuModel(): RouteItemDialogMenuModelInterface
 }

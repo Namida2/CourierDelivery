@@ -3,7 +3,7 @@ package com.example.courierdelivery.adapters.itemDecorations
 import android.graphics.Rect
 import android.view.View
 import androidx.recyclerview.widget.RecyclerView
-import com.example.courierdelivery.adapters.AddressesAdapter
+import com.example.courierdelivery.adapters.RouteItemsAdapter
 
 class RouteMapsDetailItemsDecorations(
     private val largeMargin: Int,
@@ -16,7 +16,7 @@ class RouteMapsDetailItemsDecorations(
         state: RecyclerView.State,
     ) {
         super.getItemOffsets(outRect, view, parent, state)
-        val adapter = parent.adapter as AddressesAdapter
+        val adapter = parent.adapter as RouteItemsAdapter
         when (parent.getChildAdapterPosition(view)) {
             0 ->
                 outRect.top = largeMargin

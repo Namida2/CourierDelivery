@@ -88,6 +88,7 @@ class RouteMapsFragment: Fragment() {
     }
 
     private fun onRouteMapClick(routeMapId: Int) {
+        viewModel.setCurrentRouteMapInfo(routeMapId)
         val direction = RouteMapsFragmentDirections
             .actionRouteMapsFragmentToRouteMapsDetailFragment(routeMapId)
         findNavController().navigate(direction)

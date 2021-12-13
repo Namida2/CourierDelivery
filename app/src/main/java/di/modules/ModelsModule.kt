@@ -1,9 +1,6 @@
 package di.modules
 
-import com.example.courierdelivery.models.AuthFragmentModel
-import com.example.courierdelivery.models.RouteMapsDetailModel
-import com.example.courierdelivery.models.RouteMapsFragmentModel
-import com.example.courierdelivery.models.SplashScreenModel
+import com.example.courierdelivery.models.*
 import com.example.courierdelivery.models.interfaces.*
 import com.example.courierdelivery.models.services.RouteMapsService
 import dagger.Binds
@@ -24,8 +21,11 @@ interface ModelsModule {
     @Singleton
     fun bindRouteMapsModel(model: RouteMapsFragmentModel): RouteMapsModelInterface
 
-
     @Binds
     @Singleton
     fun bindRouteMapsDetailModel(model: RouteMapsDetailModel): RouteMapsDetailModelInterface
+
+    @Binds
+    @Singleton
+    fun bindRouteItemDialogMenuModel(model: RouteItemDialogMenuModel): RouteItemDialogMenuModelInterface
 }

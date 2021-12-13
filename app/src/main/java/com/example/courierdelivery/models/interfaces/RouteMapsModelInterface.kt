@@ -8,4 +8,5 @@ interface RouteMapsModelInterface {
         onSuccess: (routeMaps: List<RouteMapInfo>) -> Unit,
         onError: (message: ErrorMessage?) -> Unit
     )
+    fun setCurrentRouteMapInfo(routeMapId: Int)
 }

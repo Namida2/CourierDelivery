@@ -47,4 +47,8 @@ class RouteMapsFragmentViewModel(
             _state.value = RouteMapsVMStates.ReadingWasFailure(it ?: defaultMessage)
         })
     }
+
+    fun setCurrentRouteMapInfo(routeMapId: Int) {
+        model.setCurrentRouteMapInfo(routeMapId)
+    }
 }

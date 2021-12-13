@@ -29,6 +29,11 @@ class RouteMapsFragmentModel @Inject constructor(
         }
     }
 
+    override fun setCurrentRouteMapInfo(routeMapId: Int) {
+        routeMapsService.currentRouteMapInfo =
+            routeMapsService.getRouteMapInfoById(routeMapId)
+    }
+
     private suspend fun getAllRouteMaps() {
         delay(1000)
         val routeMaps = listOf(
@@ -37,26 +42,22 @@ class RouteMapsFragmentModel @Inject constructor(
                     0,
                     "+7(000)000-00-00",
                     0,
-                    listOf(
+                    mutableListOf(
                         RouteItem(
                             AddressTypes.PROVIDER,
                             0,
-                            RouteItemStatus.COMPLETED
                         ),
                         RouteItem(
                             AddressTypes.PROVIDER,
                             1,
-                            RouteItemStatus.COMPLETED
                         ),
                         RouteItem(
                             AddressTypes.CLIENT,
                             0,
-                            RouteItemStatus.COMPLETED
                         ),
                         RouteItem(
                             AddressTypes.CLIENT,
                             1,
-                            RouteItemStatus.SELECTED
                         ),
                         RouteItem(
                             AddressTypes.PROVIDER,
@@ -83,6 +84,7 @@ class RouteMapsFragmentModel @Inject constructor(
                     Client(
                         0,
                         0,
+                        "Васильвева ул., 20 ,",
                         55.350346975591776,
                         86.0926499899407,
                         "+7(000)000-00-00",
@@ -93,6 +95,7 @@ class RouteMapsFragmentModel @Inject constructor(
                     Client(
                         1,
                         1,
+                        "Красноармейская улица, 136",
                         55.35841226217312,
                         86.071664605835,
                         "+7(111)111-00-00",
@@ -102,6 +105,7 @@ class RouteMapsFragmentModel @Inject constructor(
                     Client(
                         2,
                         2,
+                        "Красная улица, 15",
                         55.35109313264278,
                         86.06750181751973,
                         "+7(222)222-00-00",
@@ -111,6 +115,7 @@ class RouteMapsFragmentModel @Inject constructor(
                     Client(
                         3,
                         3,
+                        "Весенняя улица, 22 ",
                         55.35109313264278,
                         86.06750181751973,
                         "+7(333)333-00-00",
@@ -122,6 +127,7 @@ class RouteMapsFragmentModel @Inject constructor(
                     Provider(
                         0,
                         "Провинция на Советском",
+                        "Весенняя улица, 28 ",
                         55.35786404227941,
                         86.07855797588805,
                         "+7(111)111-11-11",
@@ -130,6 +136,7 @@ class RouteMapsFragmentModel @Inject constructor(
                     Provider(
                         1,
                         "Леруа Мерлен",
+                        "улица 50 лет Октября, 21А ",
                         55.35748524726899,
                         86.06290987576993,
                         "+7(222)222-11-11",
@@ -138,6 +145,7 @@ class RouteMapsFragmentModel @Inject constructor(
                     Provider(
                         2,
                         "Бизон, автоцентр",
+                        "улица Дзержинского, 20 ",
                         55.35748524726899,
                         86.06290987576993,
                         "+7(222)222-11-11",
@@ -146,6 +154,7 @@ class RouteMapsFragmentModel @Inject constructor(
                     Provider(
                         3,
                         "БСезонАвто",
+                        "проспект Ленина, 20 ",
                         55.35337562924404,
                         86.07497969434073,
                         "+7(333)333-11-11",
@@ -158,7 +167,7 @@ class RouteMapsFragmentModel @Inject constructor(
                     1,
                     "+7(111)111-11-11",
                     1,
-                    listOf(
+                    mutableListOf(
                         RouteItem(
                             AddressTypes.PROVIDER,
                             10
@@ -176,6 +185,7 @@ class RouteMapsFragmentModel @Inject constructor(
                     Client(
                         10,
                         99,
+                        "проспект Ленина, 21А ",
                         55.350346975591776,
                         86.0926499899407,
                         "+7(000)000-00-00",
@@ -187,6 +197,7 @@ class RouteMapsFragmentModel @Inject constructor(
                     Provider(
                         99,
                         "Провинция на Советском",
+                        "улица Сарыгина, 12А",
                         55.35786404227941,
                         86.07855797588805,
                         "+7(111)111-11-11",

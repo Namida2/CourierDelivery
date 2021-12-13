@@ -1,6 +1,7 @@
 package com.example.courierdelivery.models
 
 import com.example.courierdelivery.models.interfaces.RouteMapsDetailModelInterface
+import com.example.courierdelivery.models.services.RouteMapInfoSubscriber
 import com.example.courierdelivery.models.services.RouteMapsService
 import entities.RouteMapInfo
 import javax.inject.Inject
@@ -10,6 +11,14 @@ class RouteMapsDetailModel @Inject constructor(
 ): RouteMapsDetailModelInterface {
 
     override fun getRouteMapById(id: Int): RouteMapInfo =
-        routeMapService.getRouteMapById(id)
+        routeMapService.getRouteMapInfoById(id)
+
+    override fun subscribe(subscriber: RouteMapInfoSubscriber) {
+        routeMapService.subscribeOnCurrentRouteMapChanges(subscriber)
+    }
+
+    override fun unsubscribe(subscriber: RouteMapInfoSubscriber) {
+        routeMapService.unsubscribe(subscriber)
+    }
 
 }
