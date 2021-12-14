@@ -1,55 +1,33 @@
 package com.example.courierdelivery.models.services
 
+import com.example.courierdelivery.models.services.interfaces.RouteMapsServiceInterface
 import entities.RouteMapInfo
 import entities.routeMaps.Client
 import entities.routeMaps.Provider
 import entities.routeMaps.RouteItem
 import entities.routeMaps.RouteItemStatus
+import entities.tools.ExceptionMessages.CLIENT_NOT_FOUND_MESSAGE
+import entities.tools.ExceptionMessages.PROVIDER_NOT_FOUND_MESSAGE
+import entities.tools.ExceptionMessages.ROUTE_NOT_FOUND_MESSAGE
 import javax.inject.Inject
 import javax.inject.Singleton
 
 typealias RouteMapInfoSubscriber = (routeItems: MutableList<RouteItem>) -> Unit
 
-// retrofit
 @Singleton
-class RouteMapsService @Inject constructor() {
-    private val routeExceptionMessage: String = "Route not found. id: "
-    private val clientExceptionMessage: String = "Client not found. id: "
-    private val providerExceptionMessage: String = "Client not found. id: "
+class RouteMapsService @Inject constructor() : RouteMapsServiceInterface {
+
     var routeMapsInfo: MutableSet<RouteMapInfo> = mutableSetOf()
 
     private val subscribers: MutableSet<RouteMapInfoSubscriber> = mutableSetOf()
-    private var lastSelected: Int? = null
+    private var lastSelectedRouteIem: RouteItem? = null
     var currentRouteMapInfo: RouteMapInfo? = null
 
-    fun getRouteMapInfoById(id: Int): RouteMapInfo =
-        routeMapsInfo.find {
-            it.routeMap.id == id
-        } ?: throw IllegalArgumentException(routeExceptionMessage + id)
-
-    fun getClientById(id: Int): Client {
-        var client: Client? = null
-        currentRouteMapInfo!!.clients.find {
-            if (it.id == id) { client = it; true }
-            else false
-        }
-        return client ?: throw IllegalArgumentException(clientExceptionMessage + id)
-    }
-
-    fun getProviderById(id: Int): Provider {
-        var provider: Provider? = null
-        currentRouteMapInfo!!.providers.find {
-            if (it.id == id) { provider = it; true }
-            else false
-        }
-        return provider ?: throw IllegalArgumentException(providerExceptionMessage + id)
-    }
-
-    fun subscribeOnCurrentRouteMapChanges(subscriber: RouteMapInfoSubscriber) {
+    override fun subscribeOnCurrentRouteMapChanges(subscriber: RouteMapInfoSubscriber) {
         subscribers.add(subscriber)
     }
 
-    fun unsubscribe(subscriber: RouteMapInfoSubscriber) {
+    override fun unsubscribe(subscriber: RouteMapInfoSubscriber) {
         subscribers.remove(subscriber)
     }
 
@@ -59,27 +37,85 @@ class RouteMapsService @Inject constructor() {
         }
     }
 
-    //TODO: Prohibit marking multiply routeItems
-    //TODO: Prohibit changing the route map while working
-    //TODO: Add logic to other buttons
-    //TODO: Add showing a mark on the map
-    //TODO: Start working with retrofit
-
-    fun changeRouteIemStatus(routeItem: RouteItem, status: RouteItemStatus) {
+    override fun changeRouteItemStatusToSelected(routeItem: RouteItem) {
         val routeItems = mutableListOf<RouteItem>()
         currentRouteMapInfo!!.routeMap.routeItems.forEachIndexed { index, item ->
             if (item == routeItem) {
-                val newRouteItem = item.copy(status = status)
-                lastSelected = index
-                currentRouteMapInfo!!.routeMap.routeItems.forEachIndexed { i, routeItem ->
-                    if(i == index) routeItems.add(newRouteItem)
-                    else routeItems.add(routeItem)
-                }
+                val newRouteItem = item.copy(status = RouteItemStatus.SELECTED)
+                hasSelectedItem(index, newRouteItem, routeItems)
                 return@forEachIndexed
             }
         }
-        if(routeItems.size != 0)
-            notifyChanges(routeItems)
+        if (routeItems.size != 0) notifyChanges(routeItems)
+    }
+
+    override fun changeRouteItemStatusToCompleted(routeItem: RouteItem) {
+        val routeItems = mutableListOf<RouteItem>()
+        currentRouteMapInfo!!.routeMap.routeItems.forEachIndexed { index, item ->
+            if (item == routeItem) {
+                val newRouteItem = item.copy(status = RouteItemStatus.COMPLETED)
+                hasCompletedItem(index, newRouteItem, routeItems)
+                return@forEachIndexed
+            }
+        }
+        if (routeItems.size != 0) notifyChanges(routeItems)
+    }
+
+    private fun hasSelectedItem(
+        position: Int,
+        newRouteItem: RouteItem,
+        routeItems: MutableList<RouteItem>,
+    ) {
+        currentRouteMapInfo!!.routeMap.routeItems.forEachIndexed { index, item ->
+            when {
+                item == lastSelectedRouteIem -> {
+                    val itemWithDefaultStatus = item.copy(status = RouteItemStatus.DEFAULT)
+                    routeItems.add(itemWithDefaultStatus)
+                }
+                index == position -> routeItems.add(newRouteItem)
+                else -> routeItems.add(item)
+            }
+        }
+        lastSelectedRouteIem = newRouteItem
+    }
+
+    private fun hasCompletedItem(
+        position: Int,
+        newRouteItem: RouteItem,
+        routeItems: MutableList<RouteItem>,
+    ) {
+        currentRouteMapInfo!!.routeMap.routeItems.forEachIndexed { index, item ->
+            when (index) {
+                position -> routeItems.add(newRouteItem)
+                else -> routeItems.add(item)
+            }
+        }
+    }
+
+
+    override fun getRouteMapInfoById(id: Int): RouteMapInfo =
+        routeMapsInfo.find {
+            it.routeMap.id == id
+        } ?: throw IllegalArgumentException(ROUTE_NOT_FOUND_MESSAGE + id)
+
+    override fun getClientById(id: Int): Client {
+        var client: Client? = null
+        currentRouteMapInfo!!.clients.find {
+            if (it.id == id) {
+                client = it; true
+            } else false
+        }
+        return client ?: throw IllegalArgumentException(CLIENT_NOT_FOUND_MESSAGE + id)
+    }
+
+    override fun getProviderById(id: Int): Provider {
+        var provider: Provider? = null
+        currentRouteMapInfo!!.providers.find {
+            if (it.id == id) {
+                provider = it; true
+            } else false
+        }
+        return provider ?: throw IllegalArgumentException(PROVIDER_NOT_FOUND_MESSAGE + id)
     }
 
 }

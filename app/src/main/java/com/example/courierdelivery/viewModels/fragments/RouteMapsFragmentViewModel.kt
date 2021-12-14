@@ -5,10 +5,9 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.courierdelivery.models.interfaces.RouteMapsModelInterface
 import entities.ErrorMessage
-import entities.ErrorMessages.defaultMessage
-import entities.ErrorMessages.emptyRouteMapsListMessage
+import entities.tools.ErrorMessages.defaultMessage
+import entities.tools.ErrorMessages.emptyRouteMapsListMessage
 import entities.RouteMapInfo
-import entities.routeMaps.RouteMap
 
 sealed class RouteMapsVMStates {
     object Default : RouteMapsVMStates()

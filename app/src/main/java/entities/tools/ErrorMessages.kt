@@ -1,4 +1,4 @@
-package entities
+package entities.tools
 
 import com.example.courierdelivery.R
 import entities.ErrorMessage

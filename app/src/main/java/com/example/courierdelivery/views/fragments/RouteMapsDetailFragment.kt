@@ -11,6 +11,7 @@ import androidx.core.view.doOnPreDraw
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.navArgs
+import androidx.recyclerview.widget.RecyclerView
 import com.example.courierdelivery.R
 import com.example.courierdelivery.adapters.RouteItemsAdapter
 import com.example.courierdelivery.adapters.itemDecorations.RouteMapsDetailItemsDecorations

@@ -13,7 +13,7 @@ import com.example.courierdelivery.viewModels.activities.MainActivityViewModel
 
 class MainActivity : AppCompatActivity(), NavController.OnDestinationChangedListener {
 
-    private lateinit var binding: ActivityMainBinding
+    lateinit var binding: ActivityMainBinding
     private var navController: NavController? = null
     private val viewModel: MainActivityViewModel by viewModels { ViewModelFactory }
 

@@ -8,9 +8,12 @@ import android.view.ViewGroup
 import androidx.fragment.app.viewModels
 import com.example.courierdelivery.databinding.DialogRouteItemMenuBinding
 import com.example.courierdelivery.viewModels.ViewModelFactory
+import com.example.courierdelivery.viewModels.dialogs.RouteItemDialogMenuVMStates
 import com.example.courierdelivery.viewModels.dialogs.RouteItemDialogMenuViewModel
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import entities.routeMaps.RouteItem
+import entities.routeMaps.RouteItemStatus
+import extensions.createMessageDialog
 
 class RouteItemsDialogMenu : BottomSheetDialogFragment() {
 
@@ -28,11 +31,26 @@ class RouteItemsDialogMenu : BottomSheetDialogFragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?,
     ): View? {
-        binding = DialogRouteItemMenuBinding.inflate(inflater, container, false)
-        binding.viewModel = viewModel
+        initBinding(inflater, container)
+        observeViewModelStates()
         observeShowDetailEvent()
+        observeMarkOnTheMapEvent()
         return binding.root
     }
+
+    private fun initBinding(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+    ) {
+        binding = DialogRouteItemMenuBinding.inflate(inflater, container, false)
+        binding.viewModel = viewModel
+        if(routeItem!!.status == RouteItemStatus.COMPLETED)
+            with(binding) {
+                markAsCompletedButton.isEnabled = false
+                markOnTheMapButton.isEnabled = false
+            }
+    }
+
 
     private fun observeShowDetailEvent() {
         viewModel.showDetailEvent.observe(viewLifecycleOwner) {
@@ -43,4 +61,33 @@ class RouteItemsDialogMenu : BottomSheetDialogFragment() {
             RouteItemDetailDialog.show(parentFragmentManager, "")
         }
     }
+
+    private fun observeMarkOnTheMapEvent() {
+        viewModel.markOnTheMaEvent.observe(viewLifecycleOwner) {
+            val event = it.getData() ?: return@observe
+            this.dismiss()
+        }
+    }
+
+    private fun observeViewModelStates() {
+        viewModel.state.observe(viewLifecycleOwner) {
+            when (it) {
+                is RouteItemDialogMenuVMStates.PostingData ->
+                    ProcessAlertDialog.show(parentFragmentManager, "")
+                is RouteItemDialogMenuVMStates.OnPostingFailure -> {
+                    ProcessAlertDialog.dismiss()
+                    requireActivity().createMessageDialog(it.message)
+                        ?.show(parentFragmentManager, "")
+                }
+                is RouteItemDialogMenuVMStates.OnPostingSuccessful -> {
+                    ProcessAlertDialog.onSuccess()
+                    viewModel.resetState()
+                    this.dismiss()
+                }
+                else -> {}//Default
+            }
+        }
+    }
+
+
 }

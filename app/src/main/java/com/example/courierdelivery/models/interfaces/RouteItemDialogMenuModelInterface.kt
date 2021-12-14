@@ -1,12 +1,13 @@
 package com.example.courierdelivery.models.interfaces
 
+import entities.interfaces.SimpleTask
 import entities.routeMaps.Client
 import entities.routeMaps.Provider
 import entities.routeMaps.RouteItem
-import entities.routeMaps.RouteItemStatus
 
 interface RouteItemDialogMenuModelInterface {
     fun getClientById(id: Int): Client
     fun getProviderById(id: Int): Provider
-    fun changeRouteIemStatus(routeItem: RouteItem, status: RouteItemStatus)
+    fun changeRouteItemStatusToSelected(routeItem: RouteItem)
+    fun changeRouteItemStatusToComoleted(routeItem: RouteItem, simpleTask: SimpleTask)
 }

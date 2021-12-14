@@ -16,7 +16,7 @@ import com.google.firebase.auth.*
 import extensions.createMessageDialog
 import extensions.logD
 import extensions.logE
-import entities.ErrorMessages.emptyFieldMessage
+import entities.tools.ErrorMessages.emptyFieldMessage
 import java.util.concurrent.TimeUnit
 
 class AuthorisationFragment : Fragment() {
