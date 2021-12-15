@@ -6,6 +6,7 @@ import com.example.courierdelivery.viewModels.activities.MainActivityViewModel
 import com.example.courierdelivery.viewModels.fragments.AuthFragmentViewModel
 import com.example.courierdelivery.viewModels.activities.SplashScreenActAuthFragSharedViewModel
 import com.example.courierdelivery.viewModels.dialogs.RouteItemDialogMenuViewModel
+import com.example.courierdelivery.viewModels.fragments.MapFragmentViewModel
 import com.example.courierdelivery.viewModels.fragments.RouteMapsDetailViewModel
 import com.example.courierdelivery.viewModels.fragments.RouteMapsFragmentViewModel
 import di.AppComponent
@@ -14,6 +15,8 @@ object ViewModelFactory : ViewModelProvider.Factory {
     lateinit var appComponent: AppComponent
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
         val viewModel = when (modelClass) {
+            MapFragmentViewModel::class.java ->
+                MapFragmentViewModel(appComponent.provideMapFragmentModel())
             RouteItemDialogMenuViewModel::class.java ->
                 RouteItemDialogMenuViewModel(appComponent.provideRouteItemDialogMenuModel())
             RouteMapsDetailViewModel::class.java ->

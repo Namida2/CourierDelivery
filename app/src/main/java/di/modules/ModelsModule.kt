@@ -2,7 +2,6 @@ package di.modules
 
 import com.example.courierdelivery.models.*
 import com.example.courierdelivery.models.interfaces.*
-import com.example.courierdelivery.models.services.RouteMapsService
 import dagger.Binds
 import dagger.Module
 import javax.inject.Singleton
@@ -27,5 +26,9 @@ interface ModelsModule {
 
     @Binds
     @Singleton
-    fun bindRouteItemDialogMenuModel(model: RouteItemDialogMenuModel): RouteItemDialogMenuModelInterface
+    fun bindRouteItemDialogMenuModel(model: RouteItemMenuDialogModel): RouteItemMenuDialogModelInterface
+
+    @Binds
+    @Singleton
+    fun bindMapFragmentViewModelModel(model: MapFragmentModel): MapFragmentModelInterface
 }

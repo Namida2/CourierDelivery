@@ -11,14 +11,13 @@ import androidx.core.view.doOnPreDraw
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.navArgs
-import androidx.recyclerview.widget.RecyclerView
 import com.example.courierdelivery.R
 import com.example.courierdelivery.adapters.RouteItemsAdapter
 import com.example.courierdelivery.adapters.itemDecorations.RouteMapsDetailItemsDecorations
 import com.example.courierdelivery.databinding.FragmentRouteMapsDetailBinding
 import com.example.courierdelivery.viewModels.ViewModelFactory
 import com.example.courierdelivery.viewModels.fragments.RouteMapsDetailViewModel
-import com.example.courierdelivery.views.dialogs.RouteItemsDialogMenu
+import com.example.courierdelivery.views.dialogs.RouteItemsMenuDialog
 import entities.routeMaps.RouteItem
 
 class RouteMapsDetailFragment : Fragment() {
@@ -26,7 +25,7 @@ class RouteMapsDetailFragment : Fragment() {
     private lateinit var binding: FragmentRouteMapsDetailBinding
     private val viewModel: RouteMapsDetailViewModel by activityViewModels { ViewModelFactory }
     private val args: RouteMapsDetailFragmentArgs by navArgs()
-    private var menuDialog: RouteItemsDialogMenu = RouteItemsDialogMenu()
+    private var menuDialog: RouteItemsMenuDialog = RouteItemsMenuDialog()
     private var adapter: RouteItemsAdapter? = null
 
     private var largeMargin: Int? = null

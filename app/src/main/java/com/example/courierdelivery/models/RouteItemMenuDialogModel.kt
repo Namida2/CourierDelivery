@@ -1,6 +1,7 @@
 package com.example.courierdelivery.models
 
-import com.example.courierdelivery.models.interfaces.RouteItemDialogMenuModelInterface
+import com.example.courierdelivery.models.interfaces.RouteItemMenuDialogModelInterface
+import com.example.courierdelivery.models.services.MapService
 import com.example.courierdelivery.models.services.RouteMapsService
 import entities.ErrorMessage
 import entities.interfaces.SimpleTask
@@ -15,10 +16,10 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
-class RouteItemDialogMenuModel @Inject constructor(
-    //private val retrofitThings
+class RouteItemMenuDialogModel @Inject constructor(
+    private val mapService: MapService,
     private val routeMapsService: RouteMapsService,
-) : RouteItemDialogMenuModelInterface {
+) : RouteItemMenuDialogModelInterface {
 
     override fun getClientById(id: Int): Client =
         routeMapsService.getClientById(id)
@@ -27,21 +28,22 @@ class RouteItemDialogMenuModel @Inject constructor(
         routeMapsService.getProviderById(id)
 
     override fun changeRouteItemStatusToSelected(routeItem: RouteItem) {
+        mapService.placeMark = routeMapsService.getPlaceMark(routeItem)
         routeMapsService.changeRouteItemStatusToSelected(routeItem)
     }
 
-    override fun changeRouteItemStatusToComoleted(
+    override fun changeRouteItemStatusToCompleted(
         routeItem: RouteItem,
-        task: SimpleTask,
+        simpleTask: SimpleTask,
     ) {
         postRouteItemStatus(routeItem, object : SimpleTask {
             override fun onSuccess(vararg arg: Unit) {
                 routeMapsService.changeRouteItemStatusToCompleted(routeItem)
-                task.onSuccess()
+                simpleTask.onSuccess()
             }
 
             override fun onError(message: ErrorMessage?) {
-                task.onError(message)
+                simpleTask.onError(message)
             }
         })
     }

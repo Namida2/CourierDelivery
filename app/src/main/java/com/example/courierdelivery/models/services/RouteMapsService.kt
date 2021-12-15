@@ -2,10 +2,7 @@ package com.example.courierdelivery.models.services
 
 import com.example.courierdelivery.models.services.interfaces.RouteMapsServiceInterface
 import entities.RouteMapInfo
-import entities.routeMaps.Client
-import entities.routeMaps.Provider
-import entities.routeMaps.RouteItem
-import entities.routeMaps.RouteItemStatus
+import entities.routeMaps.*
 import entities.tools.ExceptionMessages.CLIENT_NOT_FOUND_MESSAGE
 import entities.tools.ExceptionMessages.PROVIDER_NOT_FOUND_MESSAGE
 import entities.tools.ExceptionMessages.ROUTE_NOT_FOUND_MESSAGE
@@ -59,6 +56,27 @@ class RouteMapsService @Inject constructor() : RouteMapsServiceInterface {
             }
         }
         if (routeItems.size != 0) notifyChanges(routeItems)
+    }
+
+    override fun getPlaceMark(routeItem: RouteItem): PlaceMark {
+        val client = getClientById(routeItem.clientId)
+        val provider = getProviderById(client.providerId)
+        when (routeItem.addressTypes) {
+            AddressTypes.CLIENT -> {
+                return PlaceMark(
+                    client.latitude,
+                    client.longitude,
+                    provider.name,
+                )
+            }
+            AddressTypes.PROVIDER -> {
+                return PlaceMark(
+                    provider.latitude,
+                    provider.longitude,
+                    provider.name,
+                )
+            }
+        }
     }
 
     private fun hasSelectedItem(

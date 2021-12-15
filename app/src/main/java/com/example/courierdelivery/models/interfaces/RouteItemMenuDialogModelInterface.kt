@@ -5,9 +5,9 @@ import entities.routeMaps.Client
 import entities.routeMaps.Provider
 import entities.routeMaps.RouteItem
 
-interface RouteItemDialogMenuModelInterface {
+interface RouteItemMenuDialogModelInterface {
     fun getClientById(id: Int): Client
     fun getProviderById(id: Int): Provider
     fun changeRouteItemStatusToSelected(routeItem: RouteItem)
-    fun changeRouteItemStatusToComoleted(routeItem: RouteItem, simpleTask: SimpleTask)
+    fun changeRouteItemStatusToCompleted(routeItem: RouteItem, simpleTask: SimpleTask)
 }

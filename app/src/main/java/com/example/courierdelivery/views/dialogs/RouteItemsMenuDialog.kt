@@ -15,7 +15,7 @@ import entities.routeMaps.RouteItem
 import entities.routeMaps.RouteItemStatus
 import extensions.createMessageDialog
 
-class RouteItemsDialogMenu : BottomSheetDialogFragment() {
+class RouteItemsMenuDialog : BottomSheetDialogFragment() {
 
     var routeItem: RouteItem? = null
     private lateinit var binding: DialogRouteItemMenuBinding

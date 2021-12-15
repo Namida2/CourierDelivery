@@ -3,14 +3,13 @@ package com.example.courierdelivery.viewModels.dialogs
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.example.courierdelivery.models.interfaces.RouteItemDialogMenuModelInterface
+import com.example.courierdelivery.models.interfaces.RouteItemMenuDialogModelInterface
 import entities.ErrorMessage
 import entities.Event
 import entities.interfaces.SimpleTask
 import entities.routeMaps.Client
 import entities.routeMaps.Provider
 import entities.routeMaps.RouteItem
-import entities.routeMaps.RouteItemStatus
 import entities.tools.ErrorMessages.defaultMessage
 
 typealias ShowDetailEvent = Event<Pair<Client, Provider>>
@@ -25,7 +24,7 @@ sealed class RouteItemDialogMenuVMStates {
 }
 
 class RouteItemDialogMenuViewModel(
-    private val model: RouteItemDialogMenuModelInterface
+    private val model: RouteItemMenuDialogModelInterface
 ): ViewModel() {
 
     var routeItem: RouteItem? = null
@@ -52,7 +51,7 @@ class RouteItemDialogMenuViewModel(
 
     fun onMarkAsCompletedButtonClick() {
         _state.value = RouteItemDialogMenuVMStates.PostingData
-        model.changeRouteItemStatusToComoleted(routeItem!!, object : SimpleTask {
+        model.changeRouteItemStatusToCompleted(routeItem!!, object : SimpleTask {
             override fun onSuccess(vararg arg: Unit) {
                 _state.value = RouteItemDialogMenuVMStates.OnPostingSuccessful
             }

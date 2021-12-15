@@ -32,7 +32,6 @@ class RouteMapsFragment: Fragment() {
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
-        requireContext().appComponent.inject(this)
         smallMargin = resources.getDimensionPixelSize(R.dimen.small_margin)
         largeMargin = resources.getDimensionPixelSize(R.dimen.large_margin)
     }
