@@ -35,7 +35,22 @@ class SplashScreenActivity : AppCompatActivity() {
         navController = navHostFragment.navController
         observeViewModelStates()
         viewModel.checkCurrentUser()
+
+
+
+
+
     }
+
+
+
+
+
+
+
+
+
+
 
     private fun observeViewModelStates() {
         viewModel.state.observe(this) {

@@ -30,5 +30,9 @@ interface ModelsModule {
 
     @Binds
     @Singleton
-    fun bindMapFragmentViewModelModel(model: MapFragmentModel): MapFragmentModelInterface
+    fun bindMapFragmentModel(model: MapFragmentModel): MapFragmentModelInterface
+
+    @Binds
+    @Singleton
+    fun bindMainActivityModel(model: MainActivityModel): MainActivityModelInterface
 }

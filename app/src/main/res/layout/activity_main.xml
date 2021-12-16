@@ -54,6 +54,7 @@
             android:id="@+id/bottomNavigation"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            app:layout_dodgeInsetEdges="top|bottom"
             android:layout_alignParentBottom="true"
             android:layout_gravity="bottom|center"
             android:background="@drawable/bg_bottom_navigation"

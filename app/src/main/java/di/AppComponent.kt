@@ -27,4 +27,5 @@ interface AppComponent {
     fun provideRouteMapsDetailModel(): RouteMapsDetailModelInterface
     fun provideRouteItemDialogMenuModel(): RouteItemMenuDialogModelInterface
     fun provideMapFragmentModel(): MapFragmentModelInterface
+    fun provideMainActivityModel(): MainActivityModelInterface
 }

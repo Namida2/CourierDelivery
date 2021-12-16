@@ -5,7 +5,27 @@ import entities.routeMaps.PlaceMark
 import javax.inject.Inject
 import javax.inject.Singleton
 
+typealias LocationAccessSub = (locationAccess: Boolean) -> Unit
+
 @Singleton
 class MapService @Inject constructor(): MapServiceInterface {
     override var placeMark: PlaceMark? = null
+    private val subscribers: MutableSet<LocationAccessSub> = mutableSetOf()
+    override var locationAccess: Boolean = false
+        set(value) {
+            field = value
+            notifyChanges()
+        }
+
+    override fun subscribe(subscriber: LocationAccessSub) {
+        subscribers.add(subscriber)
+    }
+
+    override fun unsubscribe(subscriber: LocationAccessSub) {
+        subscribers.remove(subscriber)
+    }
+
+    private fun notifyChanges() {
+        subscribers.forEach { it.invoke(locationAccess) }
+    }
 }

@@ -16,7 +16,7 @@
     <string name="emptyFieldMessage">Пожалуйста, заполниет все поля.</string>
 
     <string name="invalidNumberTitle">Неверый формат</string>
-    <string name="invalidNumberMessage">Пожалуйста, введите цифры номера подряд без дополнительных знаков.</string>
+    <string name="invalidNumberMessage">Пожалуйста, введите цифры номера подряд, начиная со знака \"+\".</string>
 
     <string name="invalidConfirmationCodeTitle">Неверый код</string>
     <string name="invalidConfirmationCodeMessage">Пожалуйста, проверьте соотвестие ввденного кода и кода из SMS.</string>

@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ProgressBar
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
@@ -59,6 +60,7 @@ class AuthorisationFragment : Fragment() {
                 }
                 else -> {
                     if(it is AuthFragmentVMStates.Default) return@observe
+                    ProcessAlertDialog.dismiss()
                     val message = it.errorMessage ?: return@observe
                     requireContext().createMessageDialog(message)
                         ?.show(parentFragmentManager, "")

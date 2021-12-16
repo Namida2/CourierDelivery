@@ -22,7 +22,7 @@ object ViewModelFactory : ViewModelProvider.Factory {
             RouteMapsDetailViewModel::class.java ->
                 RouteMapsDetailViewModel(appComponent.provideRouteMapsDetailModel())
             MainActivityViewModel::class.java ->
-                MainActivityViewModel()
+                MainActivityViewModel(appComponent.provideMainActivityModel())
             RouteMapsFragmentViewModel::class.java ->
                 RouteMapsFragmentViewModel(appComponent.provideRouteMapsModel())
             AuthFragmentViewModel::class.java ->

@@ -1,5 +1,6 @@
 package com.example.courierdelivery.views.activities
 
+import android.content.pm.PackageManager.PERMISSION_GRANTED
 import android.os.Bundle
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
@@ -10,6 +11,8 @@ import androidx.navigation.ui.NavigationUI
 import com.example.courierdelivery.databinding.ActivityMainBinding
 import com.example.courierdelivery.viewModels.ViewModelFactory
 import com.example.courierdelivery.viewModels.activities.MainActivityViewModel
+import com.example.courierdelivery.views.fragments.MapFragment
+import com.google.android.material.snackbar.Snackbar
 
 class MainActivity : AppCompatActivity(), NavController.OnDestinationChangedListener {
 
@@ -28,7 +31,7 @@ class MainActivity : AppCompatActivity(), NavController.OnDestinationChangedList
 
     private fun observeNavigationEvent() {
         viewModel.navigationEvent.observe(this) {
-            navController?.navigateUp();
+            navController?.navigateUp()
         }
     }
 
@@ -46,6 +49,30 @@ class MainActivity : AppCompatActivity(), NavController.OnDestinationChangedList
         arguments: Bundle?,
     ) {
         //
+    }
+
+    override fun onRequestPermissionsResult(
+        requestCode: Int,
+        permissions: Array<String>,
+        grantResults: IntArray,
+    ) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+        when (requestCode) {
+            MapFragment.requestCode -> {
+                if ((grantResults.isNotEmpty() && grantResults[0] == PERMISSION_GRANTED)) {
+                    viewModel.setLocationAccess(true)
+                } else {
+                    Snackbar.make(binding.root,
+                        "Permission denied.",
+                        Snackbar.LENGTH_LONG).setAnchorView(
+                        binding.bottomNavigation
+                    ).show()
+                }
+            }
+            else -> {
+                super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+            }
+        }
     }
 
 }

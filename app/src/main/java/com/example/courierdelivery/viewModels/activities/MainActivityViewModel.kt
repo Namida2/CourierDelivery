@@ -4,6 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.courierdelivery.models.MainActivityModel
+import com.example.courierdelivery.models.interfaces.MainActivityModelInterface
 import entities.Event
 
 sealed class MainActivityVMStates {
@@ -11,7 +12,7 @@ sealed class MainActivityVMStates {
 }
 
 class MainActivityViewModel(
-    //val model: MainActivityModel,
+    private val model: MainActivityModelInterface,
 ) : ViewModel() {
 
     private var _navigationEvent: MutableLiveData<Event<Unit>> = MutableLiveData()
@@ -19,6 +20,10 @@ class MainActivityViewModel(
 
     fun onNavigationClick() {
         _navigationEvent.value = Event(Unit)
+    }
+
+    fun setLocationAccess(access: Boolean) {
+        model.setLocationAccess(access)
     }
 
 }

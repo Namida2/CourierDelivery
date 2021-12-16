@@ -14,20 +14,17 @@ typealias RouteMapInfoSubscriber = (routeItems: MutableList<RouteItem>) -> Unit
 @Singleton
 class RouteMapsService @Inject constructor() : RouteMapsServiceInterface {
 
+    var currentRouteMapInfo: RouteMapInfo? = null
     var routeMapsInfo: MutableSet<RouteMapInfo> = mutableSetOf()
-
     private val subscribers: MutableSet<RouteMapInfoSubscriber> = mutableSetOf()
     private var lastSelectedRouteIem: RouteItem? = null
-    var currentRouteMapInfo: RouteMapInfo? = null
 
-    override fun subscribeOnCurrentRouteMapChanges(subscriber: RouteMapInfoSubscriber) {
+    override fun subscribe(subscriber: RouteMapInfoSubscriber) {
         subscribers.add(subscriber)
     }
-
     override fun unsubscribe(subscriber: RouteMapInfoSubscriber) {
         subscribers.remove(subscriber)
     }
-
     private fun notifyChanges(routeItems: MutableList<RouteItem>) {
         subscribers.forEach {
             it.invoke(routeItems)

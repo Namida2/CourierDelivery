@@ -14,7 +14,7 @@ class RouteMapsDetailModel @Inject constructor(
         routeMapService.getRouteMapInfoById(id)
 
     override fun subscribe(subscriber: RouteMapInfoSubscriber) {
-        routeMapService.subscribeOnCurrentRouteMapChanges(subscriber)
+        routeMapService.subscribe(subscriber)
     }
 
     override fun unsubscribe(subscriber: RouteMapInfoSubscriber) {
