@@ -95,5 +95,15 @@ class MapFragment : Fragment(), OnMapReadyCallback,
             if(locationAccess) enableMyLocation()
         }
     }
+    override fun onResume() {
+        super.onResume()
+        if (requestingLocationUpdates) startLocationUpdates()
+    }
+
+    private fun startLocationUpdates() {
+        fusedLocationClient.requestLocationUpdates(locationRequest,
+            locationCallback,
+            Looper.getMainLooper())
+    }
 
 }
