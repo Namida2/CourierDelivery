@@ -13,7 +13,6 @@ import entities.RouteMapInfo
 import entities.routeMaps.*
 
 //TODO: Add addressBottomSheetDialogMenu
-//TODO:
 
 class RouteItemsAdapter(
     private val routeMapInfo: RouteMapInfo,

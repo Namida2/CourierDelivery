@@ -9,7 +9,6 @@ import javax.inject.Inject
 class SplashScreenModel @Inject constructor(
     private val auth: FirebaseAuth,
     private val sharedPreferences: SharedPreferences,
-    //TODO: val remoteRepository:
 ) : SplashScreenModelInterface {
     private val defaultNumber = ""
     override fun getCurrentUser(): String? {

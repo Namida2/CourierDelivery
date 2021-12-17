@@ -20,6 +20,7 @@ import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.*
+import com.google.maps.android.PolyUtil
 import javax.inject.Inject
 
 
@@ -71,18 +72,8 @@ class MapFragment : Fragment(), OnMapReadyCallback,
                 ), 14f
             )
         )
-        googleMap.addPolyline(
-            PolylineOptions().add(
-                LatLng(55.3496579, 86.09403399999999)
-            ).add(
-                LatLng(55.35036530000001, 86.0924012)
-            ).add(
-                LatLng(55.34711309999999, 86.0907912)
-            ).add(
-                LatLng(55.3496579, 86.09403399999999)
-            )
-        )
-
+        PolyUtil.
+        viewModel.getDirection()
     }
 
     @SuppressLint("MissingPermission")

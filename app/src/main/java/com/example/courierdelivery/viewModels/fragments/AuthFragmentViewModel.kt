@@ -114,7 +114,6 @@ class AuthFragmentViewModel(
             _state.value = AuthFragmentVMStates.Default
             return
         }
-        // TODO: Add a state for this case
         if (storedVerificationId == null) {
             _state.value = AuthFragmentVMStates.NumberNotSent()
             return

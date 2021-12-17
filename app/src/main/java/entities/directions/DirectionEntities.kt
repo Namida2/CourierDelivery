@@ -1,5 +1,11 @@
 package entities.directions
 
+class DirectionsResponse {
+    var geocoded_waypoints: List<GeocodedWaypoint>? = null
+    var routes: List<Route>? = null
+    var status: String? = null
+}
+
 class GeocodedWaypoint {
     var geocoder_status: String? = null
     var place_id: String? = null
@@ -78,12 +84,11 @@ class Route {
     var legs: List<Leg>? = null
     var overview_polyline: OverviewPolyline? = null
     var summary: String? = null
-    var warnings: List<Any>? = null
+    var warnings: List<String>? = null
     var waypoint_order: List<Any>? = null
 }
 
 class Root {
-    var geocoded_waypoints: List<GeocodedWaypoint>? = null
-    var routes: List<Route>? = null
-    var status: String? = null
+    var directionsResponse: DirectionsResponse? = null
 }
+

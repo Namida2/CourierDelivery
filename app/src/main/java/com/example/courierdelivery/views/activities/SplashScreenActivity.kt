@@ -3,22 +3,29 @@ package com.example.courierdelivery.views.activities
 import android.os.Bundle
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.content.ContextCompat
 import androidx.navigation.NavController
 import androidx.navigation.NavDirections
 import androidx.navigation.fragment.NavHostFragment
-import com.example.courierdelivery.R
 import com.example.courierdelivery.databinding.ActivitySplashScreenBinding
 import com.example.courierdelivery.viewModels.ViewModelFactory
 import com.example.courierdelivery.viewModels.activities.SplashScreenActAuthFragSharedViewModel
 import com.example.courierdelivery.viewModels.activities.SplashScreenVMStates
 import com.example.courierdelivery.views.fragments.SplashScreenFragmentDirections
+import entities.directions.DirectionsResponse
+import extensions.logD
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers.IO
 import kotlinx.coroutines.Dispatchers.Main
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import okhttp3.OkHttpClient
+import okhttp3.logging.HttpLoggingInterceptor
+import retrofit.DirectionsService
+import retrofit2.Retrofit
+import retrofit2.converter.gson.GsonConverterFactory
+import retrofit2.http.GET
+import retrofit2.http.Query
 
 class SplashScreenActivity : AppCompatActivity() {
 
@@ -35,21 +42,7 @@ class SplashScreenActivity : AppCompatActivity() {
         navController = navHostFragment.navController
         observeViewModelStates()
         viewModel.checkCurrentUser()
-
-
-
-
-
     }
-
-
-
-
-
-
-
-
-
 
 
     private fun observeViewModelStates() {

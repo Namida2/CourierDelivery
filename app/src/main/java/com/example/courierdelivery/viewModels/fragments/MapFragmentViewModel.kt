@@ -27,4 +27,9 @@ class MapFragmentViewModel(
         super.onCleared()
         model.unsubscribeOnLocationAccessChanges(subscriber)
     }
+    //TODO: GettingCurrentLocation
+    //TODO: GettingCurrentLocation
+    fun getDirection() {
+        model.getDirections()
+    }
 }
