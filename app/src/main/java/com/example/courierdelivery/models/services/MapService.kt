@@ -8,7 +8,8 @@ import javax.inject.Singleton
 typealias LocationAccessSub = (locationAccess: Boolean) -> Unit
 
 @Singleton
-class MapService @Inject constructor(): MapServiceInterface {
+class MapService @Inject constructor() : MapServiceInterface {
+    private val destinationDelimiter = ","
     override var placeMark: PlaceMark? = null
     private val subscribers: MutableSet<LocationAccessSub> = mutableSetOf()
     override var locationAccess: Boolean = false
@@ -16,6 +17,11 @@ class MapService @Inject constructor(): MapServiceInterface {
             field = value
             notifyChanges()
         }
+
+    fun getDestination(): String =
+        placeMark?.latitude.toString() +
+                destinationDelimiter +
+                placeMark?.longitude
 
     override fun subscribe(subscriber: LocationAccessSub) {
         subscribers.add(subscriber)
@@ -28,4 +34,5 @@ class MapService @Inject constructor(): MapServiceInterface {
     private fun notifyChanges() {
         subscribers.forEach { it.invoke(locationAccess) }
     }
+
 }

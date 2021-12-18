@@ -24,6 +24,7 @@
         <Button
             android:id="@+id/refreshListButton"
             style="@style/buttonStyle"
+            android:alpha="0"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="bottom"

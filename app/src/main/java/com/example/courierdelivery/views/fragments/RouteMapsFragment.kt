@@ -16,6 +16,7 @@ import com.example.courierdelivery.viewModels.ViewModelFactory
 import com.example.courierdelivery.viewModels.activities.MainActivityViewModel
 import com.example.courierdelivery.viewModels.fragments.RouteMapsFragmentViewModel
 import com.example.courierdelivery.viewModels.fragments.RouteMapsVMStates
+import com.example.courierdelivery.views.activities.MainActivity
 import com.google.android.material.snackbar.Snackbar
 import extensions.Animations.prepareHide
 import extensions.Animations.prepareShow
@@ -80,11 +81,20 @@ class RouteMapsFragment: Fragment() {
                         ?.show(parentFragmentManager, "")
                 }
                 is RouteMapsVMStates.ReadingWasSuccessful -> {
-                    binding.progressIndicator.prepareHide().start()
+                    hideViews()
                     adapter.setRouteMaps(it.routeMaps)
                 }
-                else -> {}//Default
+                else -> {
+                    binding.refreshListButton.prepareShow().start()
+                }//Default
             }
+        }
+    }
+
+    private fun hideViews() {
+        if(binding.refreshListButton.alpha != 0f) {
+            binding.progressIndicator.prepareHide().start()
+            binding.refreshListButton.prepareHide().start()
         }
     }
 
@@ -92,7 +102,7 @@ class RouteMapsFragment: Fragment() {
         viewModel.setCurrentRouteMapInfo(routeMapId)
         val direction = RouteMapsFragmentDirections
             .actionRouteMapsFragmentToRouteMapsDetailFragment(routeMapId)
-        findNavController().navigate(direction)
+        (requireActivity() as MainActivity).navigateToDestination(direction)
     }
 
 }

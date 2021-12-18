@@ -76,6 +76,7 @@ class AuthFragmentViewModel(
             } else if (e is FirebaseTooManyRequestsException) {
                 _state.value = AuthFragmentVMStates.QuotaHasBeenExceeded()
             }
+            //TODO: Default error
         }
 
         override fun onCodeSent(

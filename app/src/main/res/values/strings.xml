@@ -2,7 +2,7 @@
     <string name="app_name">Courier delivery</string>
     <string name="routes">Маршруты</string>
     <string name="map">Карта</string>
-
+    <string name="GOOGLE_API_KEY">AIzaSyA75kbplnNizjN3iJirb5nDq9afCNxcxp4</string>
     <string name="GOOGLE_MAPS_BASE_URL">https://maps.googleapis.com</string>
     <string name="GOOGLE_MAPS_KEY_PARAMETER">key</string>
 

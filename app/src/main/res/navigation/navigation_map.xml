@@ -2,10 +2,10 @@
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/navigation_map"
-    app:startDestination="@id/mapFragment2">
+    app:startDestination="@id/mapFragment">
 
     <fragment
-        android:id="@+id/mapFragment2"
+        android:id="@+id/mapFragment"
         android:name="com.example.courierdelivery.views.fragments.MapFragment"
         android:label="MapFragment" />
 </navigation>

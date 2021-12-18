@@ -50,4 +50,5 @@ class RouteMapsFragmentViewModel(
     fun setCurrentRouteMapInfo(routeMapId: Int) {
         model.setCurrentRouteMapInfo(routeMapId)
     }
+
 }
