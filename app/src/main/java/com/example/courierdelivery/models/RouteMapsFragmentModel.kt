@@ -34,6 +34,10 @@ class RouteMapsFragmentModel @Inject constructor(
             routeMapsService.getRouteMapInfoById(routeMapId)
     }
 
+    override fun getCurrentRouteMapId(): Int? =
+        routeMapsService.currentRouteMapInfo?.routeMap?.id
+
+
     private suspend fun getAllRouteMaps() {
         delay(1000)
         val routeMaps = listOf(

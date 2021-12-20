@@ -5,6 +5,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.courierdelivery.models.interfaces.RouteMapsModelInterface
 import entities.ErrorMessage
+import entities.Event
 import entities.tools.ErrorMessages.defaultMessage
 import entities.tools.ErrorMessages.emptyRouteMapsListMessage
 import entities.RouteMapInfo
@@ -33,6 +34,14 @@ class RouteMapsFragmentViewModel(
         MutableLiveData(RouteMapsVMStates.Default)
     val state: LiveData<RouteMapsVMStates> = _state
 
+    private var _onCurrentRouteMapEmpty: MutableLiveData<Event<Int>> = MutableLiveData()
+    val onCurrentRouteMapEmpty: LiveData<Event<Int>> = _onCurrentRouteMapEmpty
+
+    private var _onRouteMapClickEvent: MutableLiveData<Event<Int>> = MutableLiveData()
+    val onRouteMapClickEvent: LiveData<Event<Int>> = _onRouteMapClickEvent
+
+    //TODO: Add method for getting routeMaps
+
     fun onRefreshButtonClick() {
         if (state.value is RouteMapsVMStates.ReadingData) return
         _state.value = RouteMapsVMStates.ReadingData
@@ -45,6 +54,17 @@ class RouteMapsFragmentViewModel(
         }, onError = {
             _state.value = RouteMapsVMStates.ReadingWasFailure(it ?: defaultMessage)
         })
+    }
+
+    fun onRouteMapClick(routeMapId: Int) {
+        val currentRouteMapId = model.getCurrentRouteMapId()
+        when (currentRouteMapId) {
+            null -> _onCurrentRouteMapEmpty.value = Event(routeMapId)
+            routeMapId -> _onRouteMapClickEvent.value = Event(routeMapId)
+            else -> {
+                //TODO: Show the message
+            }
+        }
     }
 
     fun setCurrentRouteMapInfo(routeMapId: Int) {

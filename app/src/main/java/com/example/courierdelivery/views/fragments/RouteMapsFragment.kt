@@ -17,6 +17,7 @@ import com.example.courierdelivery.viewModels.activities.MainActivityViewModel
 import com.example.courierdelivery.viewModels.fragments.RouteMapsFragmentViewModel
 import com.example.courierdelivery.viewModels.fragments.RouteMapsVMStates
 import com.example.courierdelivery.views.activities.MainActivity
+import com.example.courierdelivery.views.dialogs.ActionAlertDialog
 import com.google.android.material.snackbar.Snackbar
 import extensions.Animations.prepareHide
 import extensions.Animations.prepareShow
@@ -44,6 +45,8 @@ class RouteMapsFragment: Fragment() {
     ): View? {
         initBinding(inflater, container)
         observeViewModelStates()
+        observeOnRouteMapClickEvent()
+        observeOnCurrentRouteMapEmptyEvent()
         return binding.root
     }
 
@@ -55,7 +58,7 @@ class RouteMapsFragment: Fragment() {
         binding.viewModel = viewModel
         with(binding) {
             routeMapsRecyclerView.adapter = adapter.also {
-                it.onRouteMapClick = ::onRouteMapClick
+                it.onRouteMapClick = viewModel!!::onRouteMapClick
             }
             routeMapsRecyclerView.addItemDecoration(
                 RouteMapsItemDecorations(
@@ -66,6 +69,7 @@ class RouteMapsFragment: Fragment() {
         }
     }
 
+    //TODO: Reset viewModel state
     private fun observeViewModelStates() {
         viewModel.state.observe(viewLifecycleOwner) {
             when (it) {
@@ -98,11 +102,27 @@ class RouteMapsFragment: Fragment() {
         }
     }
 
-    private fun onRouteMapClick(routeMapId: Int) {
-        viewModel.setCurrentRouteMapInfo(routeMapId)
-        val direction = RouteMapsFragmentDirections
-            .actionRouteMapsFragmentToRouteMapsDetailFragment(routeMapId)
-        (requireActivity() as MainActivity).navigateToDestination(direction)
+    private fun observeOnCurrentRouteMapEmptyEvent() {
+        viewModel.onCurrentRouteMapEmpty.observe(viewLifecycleOwner) {
+            val routeMapId = it.getData() ?: return@observe
+            if(ActionAlertDialog.isAdded) return@observe
+            ActionAlertDialog.initDialogData {
+                viewModel.setCurrentRouteMapInfo(routeMapId)
+                val direction = RouteMapsFragmentDirections
+                    .actionRouteMapsFragmentToRouteMapsDetailFragment(routeMapId)
+                (requireActivity() as MainActivity).navigateToDestination(direction)
+            }
+            ActionAlertDialog.show(parentFragmentManager, "")
+        }
+    }
+
+    private fun observeOnRouteMapClickEvent() {
+        viewModel.onRouteMapClickEvent.observe(viewLifecycleOwner) {
+            val routeMapId = it.getData() ?: return@observe
+            val direction = RouteMapsFragmentDirections
+                .actionRouteMapsFragmentToRouteMapsDetailFragment(routeMapId)
+            (requireActivity() as MainActivity).navigateToDestination(direction)
+        }
     }
 
 }
