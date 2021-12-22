@@ -8,5 +8,6 @@ data class RouteMapInfo(
     val routeMap: RouteMap,
     val clients: List<Client>,
     val providers: List<Provider>,
+    var isSelected: Boolean = false,
 ) {
 }

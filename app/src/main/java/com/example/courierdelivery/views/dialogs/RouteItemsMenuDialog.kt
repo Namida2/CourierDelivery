@@ -51,7 +51,6 @@ class RouteItemsMenuDialog : BottomSheetDialogFragment() {
             }
     }
 
-
     private fun observeShowDetailEvent() {
         viewModel.showDetailEvent.observe(viewLifecycleOwner) {
             val pair = it.getData() ?: return@observe
@@ -88,6 +87,5 @@ class RouteItemsMenuDialog : BottomSheetDialogFragment() {
             }
         }
     }
-
 
 }

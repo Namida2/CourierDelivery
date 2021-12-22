@@ -9,6 +9,10 @@ object ErrorMessages {
         R.string.defaultTitle,
         R.string.defaultMessage
     )
+    val routeMapAlreadyUsed = ErrorMessage(
+        R.string.routeMpaAlreadyUsedTitle,
+        R.string.routeMpaAlreadyUsedMessage
+    )
 
     val emptyRouteMapsListMessage = ErrorMessage(
         R.string.emptyRouteMapsListTitle,

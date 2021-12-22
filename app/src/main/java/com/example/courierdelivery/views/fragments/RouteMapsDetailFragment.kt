@@ -24,7 +24,7 @@ class RouteMapsDetailFragment : Fragment() {
 
     private lateinit var binding: FragmentRouteMapsDetailBinding
     private val viewModel: RouteMapsDetailViewModel by activityViewModels { ViewModelFactory }
-    private val args: RouteMapsDetailFragmentArgs by navArgs()
+    private val routeMapArgs: RouteMapsDetailFragmentArgs by navArgs()
     private var menuDialog: RouteItemsMenuDialog = RouteItemsMenuDialog()
     private var adapter: RouteItemsAdapter? = null
 
@@ -62,7 +62,7 @@ class RouteMapsDetailFragment : Fragment() {
         container: ViewGroup?,
     ) {
         binding = FragmentRouteMapsDetailBinding.inflate(inflater, container, false)
-        val routeMapInfo = viewModel.getRouteMapById(args.routeMapId)
+        val routeMapInfo = viewModel.getRouteMapById(routeMapArgs.routeMapId)
         adapter = RouteItemsAdapter(
             routeMapInfo,
             defaultColorStateList!!,
@@ -79,6 +79,7 @@ class RouteMapsDetailFragment : Fragment() {
         )
     }
 
+    //TODO: Add routeMapId into menuDialog
     private fun onAddressClick(routeItem: RouteItem) {
         if(menuDialog.isAdded) return
         menuDialog.routeItem = routeItem

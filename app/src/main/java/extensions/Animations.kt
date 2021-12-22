@@ -18,10 +18,8 @@ object Animations {
     }
 
     fun View.prepareShow(duration: Long = 150, startDelay: Long = 0): ObjectAnimator {
-        val scaleX = PropertyValuesHolder.ofFloat(View.SCALE_X, 1.2f, 1f)
-        val scaleY = PropertyValuesHolder.ofFloat(View.SCALE_Y, 1.2f, 1f)
         val alpha = PropertyValuesHolder.ofFloat(View.ALPHA, 0f, 1f)
-        return ObjectAnimator.ofPropertyValuesHolder(this, scaleX, scaleY, alpha).apply {
+        return ObjectAnimator.ofPropertyValuesHolder(this, alpha).apply {
             interpolator = OvershootInterpolator()
             this.duration = duration
             this.startDelay = startDelay

@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.courierdelivery.databinding.LayoutRouteMapBinding
 import entities.RouteMapInfo
+import entities.routeMaps.RouteItemStatus
 import entities.routeMaps.RouteMap
 
 class RouteMapsAdapter (
@@ -34,8 +35,23 @@ class RouteMapsAdapter (
                 .routeItems.size.toString()
             progress.text = routeMapsInfo[position].routeMap.status
             root.tag = routeMapsInfo[position].routeMap.routeId
+            setTextColor(holder, routeMapsInfo[position].isSelected)
         }
     }
+
+    private fun setTextColor(holder: ViewHolder, isSelected: Boolean) {
+        var color = RouteItemStatus.DEFAULT.color
+        if(isSelected) color = RouteItemStatus.SELECTED.color
+        with(holder.binding) {
+            number.setTextColor(color)
+            addressesCountText.setTextColor(color)
+            addressesCount.setTextColor(color)
+            progressText.setTextColor(color)
+            progress.setTextColor(color)
+            dot.setTextColor(color)
+        }
+    }
+
 
     @SuppressLint("NotifyDataSetChanged")
     fun setRouteMaps(routeMapsInfo: List<RouteMapInfo>) {

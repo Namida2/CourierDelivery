@@ -18,6 +18,8 @@ class RouteMapsService @Inject constructor() : RouteMapsServiceInterface {
     var routeMapsInfo: MutableSet<RouteMapInfo> = mutableSetOf()
     private val subscribers: MutableSet<RouteMapInfoSubscriber> = mutableSetOf()
     private var lastSelectedRouteIem: RouteItem? = null
+    private val maxStatus = 100
+    private val percentSign = "%"
 
     override fun subscribe(subscriber: RouteMapInfoSubscriber) {
         subscribers.add(subscriber)
@@ -40,7 +42,11 @@ class RouteMapsService @Inject constructor() : RouteMapsServiceInterface {
                 return@forEachIndexed
             }
         }
-        if (routeItems.size != 0) notifyChanges(routeItems)
+        if (routeItems.size != 0){
+            notifyChanges(routeItems)
+            currentRouteMapInfo!!.routeMap.routeItems.clear()
+            currentRouteMapInfo!!.routeMap.routeItems.addAll(routeItems)
+        }
     }
 
     override fun changeRouteItemStatusToCompleted(routeItem: RouteItem) {
@@ -52,7 +58,12 @@ class RouteMapsService @Inject constructor() : RouteMapsServiceInterface {
                 return@forEachIndexed
             }
         }
-        if (routeItems.size != 0) notifyChanges(routeItems)
+        if (routeItems.size != 0) {
+            currentRouteMapInfo!!.routeMap.routeItems.clear()
+            currentRouteMapInfo!!.routeMap.routeItems.addAll(routeItems)
+            setStatus()
+            notifyChanges(routeItems)
+        }
     }
 
     override fun getPlaceMark(routeItem: RouteItem): PlaceMark {
@@ -105,6 +116,17 @@ class RouteMapsService @Inject constructor() : RouteMapsServiceInterface {
                 else -> routeItems.add(item)
             }
         }
+    }
+
+    private fun setStatus() {
+        val routeItemsCount: Float = currentRouteMapInfo!!.routeMap.routeItems.size.toFloat()
+        val oneItemWeight: Float = maxStatus / routeItemsCount
+        var currentStatus = 0f
+        currentRouteMapInfo!!.routeMap.routeItems.forEach {
+            if(it.status == RouteItemStatus.COMPLETED)
+                currentStatus += oneItemWeight
+        }
+        currentRouteMapInfo!!.routeMap.status = currentStatus.toString() + percentSign
     }
 
 

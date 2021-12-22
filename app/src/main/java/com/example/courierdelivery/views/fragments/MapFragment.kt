@@ -136,10 +136,10 @@ class MapFragment : Fragment(), OnMapReadyCallback,
     }
 
     private fun observeLocationUpdateEvent() {
-        viewModel.locationUpdateEvent.observe(viewLifecycleOwner) {
-            val newLocation = it.getData() ?: return@observe
-            //TODO: Update the polyline
-        }
+//        viewModel.locationUpdateEvent.observe(viewLifecycleOwner) {
+//            val newLocation = it.getData() ?: return@observe
+//            //TODO: Update the polyline
+//        }
     }
 
     private fun observeNewDestinationEvent() {

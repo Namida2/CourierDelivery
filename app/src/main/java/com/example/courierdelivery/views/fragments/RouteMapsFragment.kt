@@ -7,24 +7,20 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
-import androidx.navigation.fragment.findNavController
 import com.example.courierdelivery.R
 import com.example.courierdelivery.adapters.RouteMapsAdapter
 import com.example.courierdelivery.adapters.itemDecorations.RouteMapsItemDecorations
 import com.example.courierdelivery.databinding.FragmentRouteMapsBinding
 import com.example.courierdelivery.viewModels.ViewModelFactory
-import com.example.courierdelivery.viewModels.activities.MainActivityViewModel
 import com.example.courierdelivery.viewModels.fragments.RouteMapsFragmentViewModel
 import com.example.courierdelivery.viewModels.fragments.RouteMapsVMStates
 import com.example.courierdelivery.views.activities.MainActivity
 import com.example.courierdelivery.views.dialogs.ActionAlertDialog
-import com.google.android.material.snackbar.Snackbar
 import extensions.Animations.prepareHide
 import extensions.Animations.prepareShow
-import extensions.appComponent
 import extensions.createMessageDialog
 
-class RouteMapsFragment: Fragment() {
+class RouteMapsFragment : Fragment() {
 
     private var adapter = RouteMapsAdapter()
     private lateinit var binding: FragmentRouteMapsBinding
@@ -66,7 +62,15 @@ class RouteMapsFragment: Fragment() {
                     largeMargin!!
                 )
             )
+            getRouteMapsInfo()
         }
+    }
+
+    private fun getRouteMapsInfo() {
+        val routeMapsInfo = viewModel.getRouteMapsInfo()
+        if (routeMapsInfo.isEmpty())
+            binding.refreshListButton.prepareShow().start()
+        else adapter.setRouteMaps(routeMapsInfo)
     }
 
     //TODO: Reset viewModel state
@@ -76,27 +80,25 @@ class RouteMapsFragment: Fragment() {
                 is RouteMapsVMStates.ReadingData -> {
                     binding.progressIndicator.prepareShow().start()
                 }
-                is RouteMapsVMStates.ReadingWasFailure -> {
-                    requireContext().createMessageDialog(it.message)
-                        ?.show(parentFragmentManager, "")
-                }
-                is RouteMapsVMStates.DataIsEmpty -> {
-                    requireContext().createMessageDialog(it.message)
-                        ?.show(parentFragmentManager, "")
-                }
                 is RouteMapsVMStates.ReadingWasSuccessful -> {
                     hideViews()
                     adapter.setRouteMaps(it.routeMaps)
+                    viewModel.resetState()
                 }
                 else -> {
-                    binding.refreshListButton.prepareShow().start()
-                }//Default
+                    if (it is RouteMapsVMStates.Default) return@observe
+                    it.message?.let { message ->
+                        requireContext().createMessageDialog(message)
+                            ?.show(parentFragmentManager, "")
+                    }
+                    viewModel.resetState()
+                }
             }
         }
     }
 
     private fun hideViews() {
-        if(binding.refreshListButton.alpha != 0f) {
+        if (binding.refreshListButton.alpha != 0f) {
             binding.progressIndicator.prepareHide().start()
             binding.refreshListButton.prepareHide().start()
         }
@@ -105,7 +107,7 @@ class RouteMapsFragment: Fragment() {
     private fun observeOnCurrentRouteMapEmptyEvent() {
         viewModel.onCurrentRouteMapEmpty.observe(viewLifecycleOwner) {
             val routeMapId = it.getData() ?: return@observe
-            if(ActionAlertDialog.isAdded) return@observe
+            if (ActionAlertDialog.isAdded) return@observe
             ActionAlertDialog.initDialogData {
                 viewModel.setCurrentRouteMapInfo(routeMapId)
                 val direction = RouteMapsFragmentDirections

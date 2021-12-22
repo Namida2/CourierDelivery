@@ -7,9 +7,13 @@
     <string name="GOOGLE_MAPS_KEY_PARAMETER">key</string>
 
     <string name="sharedPreferencesName">userDetails</string>
+
     <!-- Messages-->
     <string name="defaultTitle">Oops!</string>
     <string name="defaultMessage">Что-то пошло не так, повторите попытку позже.</string>
+
+    <string name="routeMpaAlreadyUsedTitle">Уже испольуется другая карта</string>
+    <string name="routeMpaAlreadyUsedMessage">Пожалуйста, закончите работу с текуйщей маршртной картой, чтобы прейти к следующей.</string>
 
     <string name="emptyRouteMapsListTitle">Пусто</string>
     <string name="emptyRouteMapsListMessage">Для вас еще нет маршрутных листов. Повторите попытку позже.</string>

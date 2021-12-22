@@ -5,7 +5,7 @@ data class RouteMap(
     val courierNumber: String,
     val routeId: Int,
     val routeItems: MutableList<RouteItem>,
-    val status: String,
+    var status: String,
     val current_longitude: Double,
     val current_latitude: Double,
     ) {

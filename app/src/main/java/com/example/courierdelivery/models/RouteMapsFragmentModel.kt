@@ -17,7 +17,7 @@ class RouteMapsFragmentModel @Inject constructor(
     private val routeMapsService: RouteMapsService,
 ) : RouteMapsModelInterface {
 
-    override fun getRouteMaps(
+    override fun readRouteMaps(
         onSuccess: (routeMaps: List<RouteMapInfo>) -> Unit,
         onError: (message: ErrorMessage?) -> Unit,
     ) {
@@ -29,14 +29,21 @@ class RouteMapsFragmentModel @Inject constructor(
         }
     }
 
+    override fun getRouteMapInfoById(routeMapId: Int): RouteMapInfo =
+        routeMapsService.getRouteMapInfoById(routeMapId)
+
+    override fun getRouteMapsInfo(): List<RouteMapInfo> =
+        routeMapsService.routeMapsInfo.toList()
+
     override fun setCurrentRouteMapInfo(routeMapId: Int) {
         routeMapsService.currentRouteMapInfo =
-            routeMapsService.getRouteMapInfoById(routeMapId)
+            routeMapsService.getRouteMapInfoById(routeMapId).also {
+                it.isSelected = true
+            }
     }
 
     override fun getCurrentRouteMapId(): Int? =
         routeMapsService.currentRouteMapInfo?.routeMap?.id
-
 
     private suspend fun getAllRouteMaps() {
         delay(1000)

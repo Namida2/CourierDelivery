@@ -6,11 +6,14 @@ import androidx.lifecycle.ViewModel
 import com.example.courierdelivery.models.interfaces.RouteMapsModelInterface
 import entities.ErrorMessage
 import entities.Event
+import entities.RouteMapInfo
 import entities.tools.ErrorMessages.defaultMessage
 import entities.tools.ErrorMessages.emptyRouteMapsListMessage
-import entities.RouteMapInfo
+import entities.tools.ErrorMessages.routeMapAlreadyUsed
 
 sealed class RouteMapsVMStates {
+    open val message: ErrorMessage? = null
+
     object Default : RouteMapsVMStates()
     object ReadingData : RouteMapsVMStates()
     class ReadingWasSuccessful(
@@ -18,11 +21,15 @@ sealed class RouteMapsVMStates {
     ) : RouteMapsVMStates()
 
     class ReadingWasFailure(
-        val message: ErrorMessage = defaultMessage,
+        override val message: ErrorMessage = defaultMessage,
     ) : RouteMapsVMStates()
 
     class DataIsEmpty(
-        val message: ErrorMessage = emptyRouteMapsListMessage,
+        override val message: ErrorMessage = emptyRouteMapsListMessage,
+    ) : RouteMapsVMStates()
+
+    class RouteMapsAlreadyUsed(
+        override val message: ErrorMessage = routeMapAlreadyUsed,
     ) : RouteMapsVMStates()
 }
 
@@ -33,22 +40,22 @@ class RouteMapsFragmentViewModel(
     private var _state: MutableLiveData<RouteMapsVMStates> =
         MutableLiveData(RouteMapsVMStates.Default)
     val state: LiveData<RouteMapsVMStates> = _state
-
     private var _onCurrentRouteMapEmpty: MutableLiveData<Event<Int>> = MutableLiveData()
     val onCurrentRouteMapEmpty: LiveData<Event<Int>> = _onCurrentRouteMapEmpty
-
     private var _onRouteMapClickEvent: MutableLiveData<Event<Int>> = MutableLiveData()
     val onRouteMapClickEvent: LiveData<Event<Int>> = _onRouteMapClickEvent
 
-    //TODO: Add method for getting routeMaps
+
+    fun getRouteMapsInfo(): List<RouteMapInfo> =
+        model.getRouteMapsInfo()
 
     fun onRefreshButtonClick() {
         if (state.value is RouteMapsVMStates.ReadingData) return
         _state.value = RouteMapsVMStates.ReadingData
-        model.getRouteMaps(onSuccess = {
+        model.readRouteMaps(onSuccess = {
             if (it.isEmpty()) {
                 _state.value = RouteMapsVMStates.DataIsEmpty()
-                return@getRouteMaps
+                return@readRouteMaps
             }
             _state.value = RouteMapsVMStates.ReadingWasSuccessful(it)
         }, onError = {
@@ -57,18 +64,21 @@ class RouteMapsFragmentViewModel(
     }
 
     fun onRouteMapClick(routeMapId: Int) {
-        val currentRouteMapId = model.getCurrentRouteMapId()
-        when (currentRouteMapId) {
+        val routeMapInfo = model.getRouteMapInfoById(routeMapId)
+        //if(routeMapInfo.routeMap.status)
+        when (model.getCurrentRouteMapId()) {
             null -> _onCurrentRouteMapEmpty.value = Event(routeMapId)
             routeMapId -> _onRouteMapClickEvent.value = Event(routeMapId)
-            else -> {
-                //TODO: Show the message
-            }
+            else -> _state.value = RouteMapsVMStates.RouteMapsAlreadyUsed()
         }
     }
 
     fun setCurrentRouteMapInfo(routeMapId: Int) {
         model.setCurrentRouteMapInfo(routeMapId)
+    }
+
+    fun resetState() {
+        _state.value = RouteMapsVMStates.Default
     }
 
 }
