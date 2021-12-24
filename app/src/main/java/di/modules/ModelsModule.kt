@@ -35,4 +35,8 @@ interface ModelsModule {
     @Binds
     @Singleton
     fun bindMainActivityModel(model: MainActivityModel): MainActivityModelInterface
+
+    @Binds
+    @Singleton
+    fun bindRouteMapsMenuModel(model: RouteMapMenuDialogModel): RouteMapMenuDialogModelInterface
 }

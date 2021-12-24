@@ -3,7 +3,7 @@ package com.example.courierdelivery.viewModels.fragments
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.courierdelivery.models.interfaces.RouteMapsDetailModelInterface
-import com.example.courierdelivery.models.services.RouteMapInfoSubscriber
+import com.example.courierdelivery.models.services.RouteMapItemsSubscriber
 import entities.Event
 import entities.RouteMapInfo
 import entities.routeMaps.RouteItem
@@ -19,7 +19,7 @@ class RouteMapsDetailViewModel(
     val routeMapInfoChangedEvent: MutableLiveData<RouteMapInfoChangedEvent> =
         _routeMapInfoChangedEvent
 
-    private val subscriber = object : RouteMapInfoSubscriber {
+    private val subscriber = object : RouteMapItemsSubscriber {
         override fun invoke(routeItems: MutableList<RouteItem>) {
             _routeMapInfoChangedEvent.value = Event(routeItems)
         }

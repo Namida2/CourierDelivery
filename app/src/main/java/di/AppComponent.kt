@@ -1,6 +1,7 @@
 package di
 
 import android.content.SharedPreferences
+import com.example.courierdelivery.models.RouteMapMenuDialogModel
 import com.example.courierdelivery.models.SplashScreenModel
 import com.example.courierdelivery.models.interfaces.*
 import com.example.courierdelivery.views.fragments.MapFragment
@@ -31,4 +32,5 @@ interface AppComponent {
     fun provideRouteItemDialogMenuModel(): RouteItemMenuDialogModelInterface
     fun provideMapFragmentModel(): MapFragmentModelInterface
     fun provideMainActivityModel(): MainActivityModelInterface
+    fun provideRouteMapMenuDialogModel(): RouteMapMenuDialogModel
 }

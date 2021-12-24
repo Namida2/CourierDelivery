@@ -1,11 +1,11 @@
 package com.example.courierdelivery.models.interfaces
 
-import com.example.courierdelivery.models.services.RouteMapInfoSubscriber
+import com.example.courierdelivery.models.services.RouteMapItemsSubscriber
 import entities.RouteMapInfo
 
 interface RouteMapsDetailModelInterface {
     fun getRouteMapById(id: Int): RouteMapInfo
-    fun subscribe(subscriber: RouteMapInfoSubscriber)
-    fun unsubscribe(subscriber: RouteMapInfoSubscriber)
+    fun subscribe(subscriber: RouteMapItemsSubscriber)
+    fun unsubscribe(subscriber: RouteMapItemsSubscriber)
 
 }

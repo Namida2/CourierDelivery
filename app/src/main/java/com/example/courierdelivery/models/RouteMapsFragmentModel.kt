@@ -2,6 +2,7 @@ package com.example.courierdelivery.models
 
 import com.example.courierdelivery.models.interfaces.RouteMapsModelInterface
 import com.example.courierdelivery.models.services.RouteMapsService
+import com.example.courierdelivery.models.services.RouteMapsSubscriber
 import entities.ErrorMessage
 import entities.RouteMapInfo
 import entities.routeMaps.*
@@ -44,6 +45,13 @@ class RouteMapsFragmentModel @Inject constructor(
 
     override fun getCurrentRouteMapId(): Int? =
         routeMapsService.currentRouteMapInfo?.routeMap?.id
+
+    override fun subscribeOnRouteMapsChanges(subscriber: RouteMapsSubscriber) {
+        routeMapsService.subscribeOnRouteMapsChanges(subscriber)
+    }
+    override fun unsubscribeOnRouteMapsChanges(subscriber: RouteMapsSubscriber) {
+        routeMapsService.unsubscribeOnRouteMapsChanges(subscriber)
+    }
 
     private suspend fun getAllRouteMaps() {
         delay(1000)

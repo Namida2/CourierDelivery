@@ -16,6 +16,7 @@ import com.example.courierdelivery.viewModels.fragments.RouteMapsFragmentViewMod
 import com.example.courierdelivery.viewModels.fragments.RouteMapsVMStates
 import com.example.courierdelivery.views.activities.MainActivity
 import com.example.courierdelivery.views.dialogs.ActionAlertDialog
+import com.example.courierdelivery.views.dialogs.RouteMapMenuDialog
 import extensions.Animations.prepareHide
 import extensions.Animations.prepareShow
 import extensions.createMessageDialog
@@ -43,6 +44,8 @@ class RouteMapsFragment : Fragment() {
         observeViewModelStates()
         observeOnRouteMapClickEvent()
         observeOnCurrentRouteMapEmptyEvent()
+        observeOnCompletedRouteMapClickEvent()
+        observeOnRouteMapRemovedEvent()
         return binding.root
     }
 
@@ -73,7 +76,6 @@ class RouteMapsFragment : Fragment() {
         else adapter.setRouteMaps(routeMapsInfo)
     }
 
-    //TODO: Reset viewModel state
     private fun observeViewModelStates() {
         viewModel.state.observe(viewLifecycleOwner) {
             when (it) {
@@ -124,6 +126,24 @@ class RouteMapsFragment : Fragment() {
             val direction = RouteMapsFragmentDirections
                 .actionRouteMapsFragmentToRouteMapsDetailFragment(routeMapId)
             (requireActivity() as MainActivity).navigateToDestination(direction)
+        }
+    }
+
+    private fun observeOnCompletedRouteMapClickEvent() {
+        viewModel.onCompletedRouteMapClickEvent.observe(viewLifecycleOwner) {
+            val routeMapId = it.getData() ?: return@observe
+            if(RouteMapMenuDialog.isAdded) return@observe
+            RouteMapMenuDialog.routeMapId = routeMapId
+            RouteMapMenuDialog.show(parentFragmentManager, "")
+        }
+    }
+
+    private fun observeOnRouteMapRemovedEvent() {
+        viewModel.onRouteMapRemovedEvent.observe(viewLifecycleOwner) {
+            val routeMaps = it.getData() ?: return@observe
+            adapter.setRouteMaps(routeMaps)
+            if(routeMaps.isEmpty())
+                binding.refreshListButton.prepareShow().start()
         }
     }
 

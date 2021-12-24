@@ -9,29 +9,49 @@ import entities.tools.ExceptionMessages.ROUTE_NOT_FOUND_MESSAGE
 import javax.inject.Inject
 import javax.inject.Singleton
 
-typealias RouteMapInfoSubscriber = (routeItems: MutableList<RouteItem>) -> Unit
+typealias RouteMapItemsSubscriber = (routeItems: MutableList<RouteItem>) -> Unit
+typealias RouteMapsSubscriber = (routeMaps: MutableList<RouteMapInfo>) -> Unit
 
 @Singleton
 class RouteMapsService @Inject constructor() : RouteMapsServiceInterface {
 
+    //TODO: Decomposition into two classes
+
     var currentRouteMapInfo: RouteMapInfo? = null
-    var routeMapsInfo: MutableSet<RouteMapInfo> = mutableSetOf()
-    private val subscribers: MutableSet<RouteMapInfoSubscriber> = mutableSetOf()
+    var routeMapsInfo: MutableList<RouteMapInfo> = mutableListOf()
+    private val routeItemsSubscribers: MutableSet<RouteMapItemsSubscriber> = mutableSetOf()
+    private val routeMapsSubscribers: MutableSet<RouteMapsSubscriber> = mutableSetOf()
     private var lastSelectedRouteIem: RouteItem? = null
     private val maxStatus = 100
     private val percentSign = "%"
 
-    override fun subscribe(subscriber: RouteMapInfoSubscriber) {
-        subscribers.add(subscriber)
+    override fun subscribeOnRouteItemsChanges(subscriber: RouteMapItemsSubscriber) {
+        routeItemsSubscribers.add(subscriber)
     }
-    override fun unsubscribe(subscriber: RouteMapInfoSubscriber) {
-        subscribers.remove(subscriber)
+
+    override fun unsubscribeOnRouteItemsChanges(subscriber: RouteMapItemsSubscriber) {
+        routeItemsSubscribers.remove(subscriber)
     }
-    private fun notifyChanges(routeItems: MutableList<RouteItem>) {
-        subscribers.forEach {
+
+    override fun subscribeOnRouteMapsChanges(subscriber: RouteMapsSubscriber) {
+        routeMapsSubscribers.add(subscriber)
+    }
+
+    override fun unsubscribeOnRouteMapsChanges(subscriber: RouteMapsSubscriber) {
+        routeMapsSubscribers.remove(subscriber)
+    }
+
+    private fun notifyRouteMapItemsSubscribers(routeItems: MutableList<RouteItem>) {
+        routeItemsSubscribers.forEach {
             it.invoke(routeItems)
         }
     }
+    private fun notifyRouteMapsSubscriber(routeItems: MutableList<RouteMapInfo>) {
+        routeMapsSubscribers.forEach {
+            it.invoke(routeItems)
+        }
+    }
+
 
     override fun changeRouteItemStatusToSelected(routeItem: RouteItem) {
         val routeItems = mutableListOf<RouteItem>()
@@ -42,8 +62,8 @@ class RouteMapsService @Inject constructor() : RouteMapsServiceInterface {
                 return@forEachIndexed
             }
         }
-        if (routeItems.size != 0){
-            notifyChanges(routeItems)
+        if (routeItems.size != 0) {
+            notifyRouteMapItemsSubscribers(routeItems)
             currentRouteMapInfo!!.routeMap.routeItems.clear()
             currentRouteMapInfo!!.routeMap.routeItems.addAll(routeItems)
         }
@@ -62,7 +82,7 @@ class RouteMapsService @Inject constructor() : RouteMapsServiceInterface {
             currentRouteMapInfo!!.routeMap.routeItems.clear()
             currentRouteMapInfo!!.routeMap.routeItems.addAll(routeItems)
             setStatus()
-            notifyChanges(routeItems)
+            notifyRouteMapItemsSubscribers(routeItems)
         }
     }
 
@@ -123,10 +143,20 @@ class RouteMapsService @Inject constructor() : RouteMapsServiceInterface {
         val oneItemWeight: Float = maxStatus / routeItemsCount
         var currentStatus = 0f
         currentRouteMapInfo!!.routeMap.routeItems.forEach {
-            if(it.status == RouteItemStatus.COMPLETED)
+            if (it.status == RouteItemStatus.COMPLETED)
                 currentStatus += oneItemWeight
         }
         currentRouteMapInfo!!.routeMap.status = currentStatus.toString() + percentSign
+    }
+
+
+    override fun removeRouteMapById(routeMapId: Int) {
+        routeMapsInfo.remove(
+            getRouteMapInfoById(routeMapId)
+        )
+        if(currentRouteMapInfo?.routeMap?.id == routeMapId)
+            currentRouteMapInfo = null
+        notifyRouteMapsSubscriber(routeMapsInfo)
     }
 
 

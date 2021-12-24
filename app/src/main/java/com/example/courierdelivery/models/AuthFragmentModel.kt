@@ -14,5 +14,4 @@ class AuthFragmentModel @Inject constructor(
             SharedPreferencesConst.PHONE_NUMBER, number
         ).apply()
     }
-
 }

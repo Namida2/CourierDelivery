@@ -19,6 +19,7 @@
             android:layout_height="match_parent"
             app:defaultNavHost="true"
             android:layout_marginTop="44dp"
+            android:layout_marginBottom="55dp"
             app:navGraph="@navigation/navigation_main"/>
 
         <com.google.android.material.appbar.AppBarLayout
@@ -63,7 +64,6 @@
             app:itemRippleColor="@color/black"
             app:itemTextColor="@color/black"
             app:labelVisibilityMode="labeled"
-            app:layout_behavior="com.google.android.material.behavior.HideBottomViewOnScrollBehavior"
             app:menu="@menu/menu_main" />
 
     </androidx.coordinatorlayout.widget.CoordinatorLayout>

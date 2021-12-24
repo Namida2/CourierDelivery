@@ -6,6 +6,7 @@ import com.example.courierdelivery.viewModels.activities.MainActivityViewModel
 import com.example.courierdelivery.viewModels.fragments.AuthFragmentViewModel
 import com.example.courierdelivery.viewModels.activities.SplashScreenActAuthFragSharedViewModel
 import com.example.courierdelivery.viewModels.dialogs.RouteItemDialogMenuViewModel
+import com.example.courierdelivery.viewModels.dialogs.RouteMapMenuDialogViewModel
 import com.example.courierdelivery.viewModels.fragments.MapFragmentViewModel
 import com.example.courierdelivery.viewModels.fragments.RouteMapsDetailViewModel
 import com.example.courierdelivery.viewModels.fragments.RouteMapsFragmentViewModel
@@ -15,6 +16,8 @@ object ViewModelFactory : ViewModelProvider.Factory {
     lateinit var appComponent: AppComponent
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
         val viewModel = when (modelClass) {
+            RouteMapMenuDialogViewModel::class.java ->
+                RouteMapMenuDialogViewModel(appComponent.provideRouteMapMenuDialogModel())
             MapFragmentViewModel::class.java ->
                 MapFragmentViewModel(appComponent.provideMapFragmentModel())
             RouteItemDialogMenuViewModel::class.java ->
@@ -29,7 +32,7 @@ object ViewModelFactory : ViewModelProvider.Factory {
                 AuthFragmentViewModel(appComponent.provideAuthFragmentModel())
             SplashScreenActAuthFragSharedViewModel::class.java ->
                 SplashScreenActAuthFragSharedViewModel(appComponent.provideSplashScreenModel())
-            else -> throw IllegalArgumentException("Unknown viewModel class")
+            else -> throw IllegalArgumentException("Unknown viewModel class: $modelClass")
         }
         return viewModel as T
     }
